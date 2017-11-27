@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="studylist">
+  <select id="mystudylist" resultType="StudyListVO" parameterType="int">
+    select s.STDLIST_NO ,s.STDLIST_TITLE, s.STDLIST_TOPIC ,s.STDLIST_AREA, s.STDLIST_TIME, s.STDLIST_DOW, s.STDLIST_DATE
+    from STUDYLIST s
+    where s.STDLIST_NO IN(
+        select r.STDLIST_NO
+        from RECRUIT r
+        where r.MEMBERNO=#{memberno} and (r.STD_AUTH='T' or r.STD_AUTH='L')
+    )
+  </select>
+</mapper>

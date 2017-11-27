@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 부분은 테이블명을 명시 -->
+<mapper namespace="studylist">
+
+<!-- 스터디 그룹을 등록 -->
+  <insert id="create" parameterType="StudyListVO">
+  INSERT INTO studylist(stdlist_no, stdlist_topic, stdlist_email, stdlist_time, stdlist_title, stdlist_area, stdlist_dow, stdlist_date, stdlist_tot_num, stdlist_curr_num,
+  stdlist_content, memberno, cateno)
+  VALUES((SELECT NVL(MAX(stdlist_no), 0)+1 as stdlist_no FROM studylist), #{stdlist_topic}, #{stdlist_email}, #{stdlist_time}, #{stdlist_title}, #{stdlist_area}, #{stdlist_dow},
+  sysdate, #{stdlist_tot_num}, 1, #{stdlist_content}, 1, 10)
+  </insert>
+
+<!-- 스터디 리스트의 전체목록을 검색한다. -->
+  <select id="list" resultType="StudyListVO">
+    select stdlist_no, stdlist_title, stdlist_email, stdlist_topic, stdlist_time, stdlist_area, stdlist_dow, stdlist_tot_num, stdlist_curr_num, stdlist_content, stdlist_cnt, stdlist_recom_cnt, stdlist_date, memberno, cateno
+    from studylist
+    order by stdlist_no asc
+  </select>
+     
+  <!--  스터디리스트 조회-->
+   <select id="read_std" resultType="StudyListVO"  parameterType="int">
+    select stdlist_no, stdlist_title, stdlist_email, stdlist_topic, stdlist_time, stdlist_area, stdlist_dow, stdlist_tot_num, stdlist_curr_num, stdlist_content, stdlist_cnt, stdlist_recom_cnt, stdlist_date, memberno, cateno
+    from studylist
+    where stdlist_no = #{stdlist_no}
+   </select>
+     
+  <!-- 스터디모집내용을 수정한다.-->
+   <update id="update" parameterType="StudyListVO">
+    UPDATE studylist
+    SET stdlist_title=#{stdlist_title}, stdlist_email=#{stdlist_email}, stdlist_topic=#{stdlist_topic}, stdlist_time=#{stdlist_time}, stdlist_area=#{stdlist_area}, stdlist_dow=#{stdlist_dow}, stdlist_tot_num=#{stdlist_tot_num}, stdlist_content=#{stdlist_content} 
+    WHERE stdlist_no=#{stdlist_no}
+  </update>
+  
+  <!-- 스터디모집내용을 삭제한다. -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM studylist 
+    WHERE stdlist_no = #{stdlist_no}
+  </delete>
+  
+  <!-- 스터디모집글과 회원정보를 조회한다. -->
+  <select id="read" resultType="StudyList_MemberVO" parameterType="StudyList_MemberVO" >
+     select stdlist_no, stdlist_title, stdlist_email, stdlist_topic, stdlist_time, stdlist_area, stdlist_dow, stdlist_tot_num, stdlist_curr_num, stdlist_content, stdlist_cnt, stdlist_recom_cnt, stdlist_date,
+    mememail, memname, memgender, memphone, memsns, memphoto_t
+    from studylist, member
+    where  studylist.memberno = member.memberno
+    and stdlist_no = #{stdlist_no} 
+    and studylist.memberno = #{memberno}
+  </select>
+  
+  <!-- /팀장이 회원 승인 신청을 하게 되면 현재인원수 +1 -->
+  <update id="up_currnum" parameterType="int">
+  UPDATE studylist
+  SET stdlist_curr_num = stdlist_curr_num+1
+  WHERE stdlist_no= #{stdlist_no}
+  </update>
+  
+  <!-- // 조회수  +1  -->
+   <update id="up_cnt" parameterType="int">
+  UPDATE studylist
+  SET stdlist_cnt = stdlist_cnt+1
+  WHERE stdlist_no = #{stdlist_no}
+   </update>
+   
+   <!-- 스터디리스트의 번호 조회 -->
+   <select id="stdlist_no" resultType="int">
+   SELECT NVL(MAX(stdlist_no), 0) as stdlist_no FROM studylist
+   </select>
+   
+</mapper>

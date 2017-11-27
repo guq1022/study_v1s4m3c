@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 부분은 테이블명을 명시 -->
+<mapper namespace="recruit">
+
+<!-- 등록과 동시에 모집을 시작 하면서 등록 -->
+  <insert id="create" parameterType="RecruitVO">
+   insert into recruit(recruitno, confirm, std_auth, stdlist_no, memberno)
+    values((SELECT NVL(MAX(recruitno), 0)+1 as recruitno FROM recruit), 'U', 'U', ${stdlist_no}, ${memberno})
+  </insert>
+  
+  <!-- 신청테이블과 회원 테이블을 조인하여 신청리스트를 출력 -->
+  <select id="recruit_list" resultType="Recruit_MemberVO" parameterType="int">
+  SELECT memname, memgender, mememail, recruitno, confirm, std_auth, stdlist_no
+  FROM recruit , MEMBER
+  WHERE  recruit.memberno = MEMBER.memberno
+  AND stdlist_no = #{stdlist_no}
+  </select>
+  
+  
+  <!-- //팀장의 승인과 권한을 모집등록과 동시에
+  // 승인 U -> Y  권한 U ->L -->
+  <update id= "leader_auth" parameterType="int">
+  UPDATE recruit
+  set confirm = 'Y'
+  ,std_auth = 'L'
+  where memberno = #{memberno}
+  </update>
+ 
+<!--   //팀장이 신청 리스트를 통해 회원을 승인하게 되면
+  //승인 U-> Y   권한 U->T  -->
+  <update id = "confirm_Y" parameterType="int">
+  UPDATE recruit
+  set confirm = 'Y'
+  , std_auth = 'T'
+  where memberno = #{memberno}
+  </update>
+
+</mapper>

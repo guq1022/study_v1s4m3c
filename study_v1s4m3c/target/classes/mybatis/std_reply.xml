@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 부분은 테이블명을 명시 -->
+<mapper namespace="std_reply">
+
+<insert id="create" parameterType="ReplyVO">
+  insert into std_reply(std_repno, std_repcont, std_repdate, std_repname, memberno, stdlist_no) 
+  values((SELECT NVL(MAX(std_repno), 0)+1 as std_repno FROM std_reply), ${std_repcont}, sysdate, ${std_repname}, ${memberno}, ${stdlist_no})
+</insert>
+
+</mapper>
