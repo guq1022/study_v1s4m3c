@@ -35,6 +35,7 @@ public class My_pdsVO {
   private int memberno;
   private int mylistno;
   
+  /**=DB에 없는 property ===========================================*/ 
   /** Spring Framework에서 자동 주입되는 업로드 파일 객체,
   실제 컬럼은 존재하지 않음.
   */  
@@ -48,15 +49,29 @@ public class My_pdsVO {
    */
   private String memname;
   
-  
   /**
    * 임시저장하여 사용하기위해 선언.
    */
   private int stdlist_no;
   private int cateno;
   
+  /**
+   * 검색 결과 수를 저장
+   */
+  private int search_count;
+  
+  /**================================================================*/  
+  
   public int getStdlist_no() {
     return stdlist_no;
+  }
+
+  public int getSearch_count() {
+    return search_count;
+  }
+
+  public void setSearch_count(int search_count) {
+    this.search_count = search_count;
   }
 
   public void setStdlist_no(int stdlist_no) {

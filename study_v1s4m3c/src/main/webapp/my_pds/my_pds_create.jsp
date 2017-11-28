@@ -75,7 +75,7 @@
         <div class="control-group"> 
           <label class="control-label" for="word" style="width: 10%; text-align: left;"><img src='/study/my_pds/images/word.png'>검색어</label>
           <div class="controls" style="margin-left: 15px;">
-            <input type="text" name='pdsword' id='pdsword' value="test">
+            <input type="text" name='pdsword' id='pdsword' placeholder="검색어 입력"> 
           </div>
         </div>
         

@@ -13,17 +13,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{pdstitle}, #{pdspasswd}, #{pdscontent}, #{pdsfile1}, #{pdsfilesize}, #{pdsthumb}, #{pdsword}, 0, 0, sysdate, #{memberno}, #{mylistno})
   </insert>
   
-  <!-- 모든 글 조회 -->
+  <!-- 모든 글 조회 + 검색 기능 추가 -->
   <select id="list" parameterType="HashMap" resultType="My_pdsVO">
-  select pdsno, pdstitle, pdscontent, pdslike, pdscnt, memberno, pdsdate, pdsfile1, pdsthumb
-         <!-- (select memname from member where memberno = #{memberno}) as memname -->
+  select pdsno, pdstitle, pdscontent, pdslike, pdscnt, memberno, pdsdate, pdsfile1, pdsthumb, r
+  from(
+    select pdsno, pdstitle, pdscontent, pdslike, pdscnt, memberno, pdsdate, pdsfile1, pdsthumb, rownum as r
+    from(
+      select pdsno, pdstitle, pdscontent, pdslike, pdscnt, memberno, pdsdate, pdsfile1, pdsthumb
+      from my_pds
+      <choose>
+        <when test="pdsword == null or pdsword == ''"> <!-- 검색하지 않는 경우 -->
+          WHERE mylistno=#{mylistno}
+        </when> 
+        <otherwise>
+          WHERE mylistno=#{mylistno} AND pdsword LIKE '%' || #{pdsword} || '%'  
+        </otherwise>
+      </choose>
+      ORDER BY pdsno DESC
+    )
+  )
+  where <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]>
+  </select>
+  
+  <!-- 조회된 글 수 -->
+  <select id="search_count" parameterType="HashMap" resultType="int">
+  select count(*) as search_count
   from my_pds
-  <!-- where mylistno IN (
-    select mylistno
-    from my_std_catelist
-    where stdlist_no= #{stdlist_no} AND cateno=#{cateno}
-  ) -->
-  where mylistno = #{mylist_no}
+  <choose>
+    <when test="pdsword == null or pdsword == ''"> <!-- 검색하지 않는 경우 -->
+      WHERE mylistno=#{mylistno}
+    </when> 
+    <otherwise>
+      WHERE mylistno=#{mylistno} AND pdsword LIKE '%' || #{pdsword} || '%'  
+    </otherwise>
+  </choose>
   ORDER BY pdsno DESC
   </select>
   

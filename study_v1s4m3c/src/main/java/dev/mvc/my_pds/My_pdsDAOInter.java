@@ -21,7 +21,7 @@ public interface My_pdsDAOInter {
    * @param hashMap
    * @return List<My_pdsVO>
    */
-  public List<My_pdsVO> list(HashMap<String, Integer> hashMap);
+  public List<My_pdsVO> list(HashMap<String, Object> hashMap);
   
   /**
    * <select id="search_mylistno" parameterType="HashMap" resultType="My_std_catelistVO">
@@ -118,4 +118,12 @@ public interface My_pdsDAOInter {
    * @return
    */
   public int del_file(int pdsno);
+  
+  /**
+   * <select id="search_count" parameterType="HashMap" resultType="int">
+   * 검색 결과 갯수 반환
+   * @param hashMap
+   * @return 검색 결과 수
+   */
+  public int search_count(HashMap<String, Object> hashMap);
 }

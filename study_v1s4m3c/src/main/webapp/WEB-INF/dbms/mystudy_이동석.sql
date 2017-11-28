@@ -227,6 +227,73 @@ UPDATE my_pds
 SET pdslike=pdslike+1
 WHERE pdsno=2;
 
+8) 검색
+
+SELECT pdsno, pdstitle, pdspasswd, pdscontent, pdsfile1, pdsfilesize, pdsthumb,
+pdsword, pdslike, pdscnt, pdsdate, memberno, mylistno
+FROM my_pds
+WHERE mylistno=1 AND pdsword LIKE 'test';
+
+/*==========================================================================================*/
+9) 페이징 기본 개념
+
+DROP TABLE PG;
+ 
+CREATE TABLE PG(
+  num NUMBER(5) NOT NULL,
+  title  VARCHAR(20) NOT NULL,
+  PRIMARY KEY(num)
+);
+ 
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '01월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '02월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '03월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '04월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '05월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '06월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '07월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '08월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '09월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '10월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '11월');
+INSERT INTO pg(num, title)
+VALUES((SELECT NVL(MAX(num), 0) +1 as num FROM pg), '12월');
+
+
+SELECT num, title, rownum
+FROM pg;
+
+-- 2,3월 삭제
+DELETE FROM pg WHERE num=2 or num=3;
+
+-- 페이징시는 일정한 순차값이 생성되는 rownum 값을 사용합니다.
+-- rownum주의: rownum은 정렬(ORDER BY ~)보다 먼저 생성됨으로
+-- 정렬을 한 후 rownum 컬럼을 사용합니다. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*==========================================================================================*/
 
 
 /**********************************/
@@ -380,6 +447,7 @@ WHERE pdsno=부모글 번호 AND mycom_rank > (현재 댓글을 달고자하는 부모 댓글의 ran
  * 실습과는 유사한 알고리즘과 컨트롤러가 예상되지만, 어느정도 생각할 시간이 필요할 듯.
  * 
  */
+
 
 
 

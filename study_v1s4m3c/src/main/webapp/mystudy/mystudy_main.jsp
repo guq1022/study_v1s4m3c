@@ -21,6 +21,8 @@ String root = request.getContextPath(); // 절대 경로 지정
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
+<script type="text/javascript" src="../js/jquery.cookie.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
   
@@ -33,9 +35,22 @@ $(document).ready(function(){
     $("td", this).css("background-color", "#ffffff");
   });
   
+  /* 쿠키를 select 할 때는 #을 사용한다.
+  아이디를 이용해 태그를 검색하는 것과 동일하다.
   
-});
-
+  값을 대입할 때도 val() 함수를 사용한다. (동일함)
+  */
+  
+  $.cookie('pdsword1', '', {path:'/'}); // Cookie 생성
+  $.cookie('pdsword2', '', {path:'/'}); // Cookie 생성
+  $.cookie('pdsword3', '', {path:'/'}); // Cookie 생성
+  
+  $.cookie('nowpage', 1, {path:'/'}); // 현재 페이지 저장 cookie
+  $.cookie('nowpage2', 1, {path:'/'}); // 현재 페이지 저장 cookie
+  $.cookie('nowpage3', 1, {path:'/'}); // 현재 페이지 저장 cookie 
+   
+}); 
+ 
 function load(stdlist_no){
   location.href="/study/mystudy/mystudy_space.do?stdlist_no="+stdlist_no+"&cateno=2";
 }
@@ -104,31 +119,30 @@ function load(stdlist_no){
   </DIV>
   
   <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <h3>Some text in the modal.</h3>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+  <div class="modal fade" id="myModal" role="dialog" style="display: none;">
+    <!-- Modal content--> 
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <h3>Some text in the modal.</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-  </div>
+  </div> 
   
-  <DIV class="well well-xs" style="border: solid 1px #000000; margin-top: 1%; width: 45%; height:200px; float:left; margin-left: 1%">
-    <h1>공모전 요약 정보들</h1>
-  </DIV>
-  
-  <DIV class="well well-xs" style="border: solid 1px #000000; margin-top: 1%; width: 45%; height:200px; float: left; margin-left: 1%; margin-right: 1%">
-    <h1>취업정보 요약 정보들</h1>
+  <DIV style="text-align: center;">
+    <DIV class="well well-xs" style="border: solid 1px #000000; margin-top: 1%; width: 46.4%; height:200px; display:inline-block;">
+      <h1>공모전 요약 정보들</h1>
+    </DIV>
+    
+    <DIV class="well well-xs" style="border: solid 1px #000000; margin-top: 1%; width: 46.4%; height:200px; display: inline-block;">
+      <h1>취업정보 요약 정보들</h1>
+    </DIV>
   </DIV>
   
 </DIV> <!-- content END -->

@@ -229,26 +229,17 @@
   
   <!-- 비밀번호 검사 결과 Modal -->
   <div class="modal fade" id="modal_pwcheck" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-      
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title text-error" id='modal_title'></h3>
-        </div>
-        
-        <div class="modal-body"> 
-          <span id='modal_content' class="text-error" style="font-weight: bolder;"></span>
-        </div>
-        
-        <div id="modal_footer" class="modal-footer">
-          
-        </div>
-        
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title text-error" id='modal_title'></h3>
       </div>
-      
+      <div class="modal-body"> 
+        <span id='modal_content' class="text-error" style="font-weight: bolder;"></span>
+      </div>
+      <div id="modal_footer" class="modal-footer">
+      </div>
     </div>
   </div>
   <!-- 비밀번호 검사 결과 Modal END -->
@@ -305,7 +296,7 @@
         <div class="control-group"> 
           <label class="control-label" for="word" style="width: 10%; text-align: left;"><img src='/study/my_pds/images/word.png'>검색어</label>
           <div class="controls" style="margin-left: 15px;">
-            <input type="text" name='pdsword' id='pdsword' value="test">
+            <input type="text" name='pdsword' id='pdsword' value="${My_pdsVO.pdsword }">
           </div>
         </div>
         

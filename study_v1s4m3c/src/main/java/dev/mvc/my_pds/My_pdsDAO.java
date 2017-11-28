@@ -21,7 +21,7 @@ public class My_pdsDAO implements My_pdsDAOInter{
   }
 
   @Override
-  public List<My_pdsVO> list(HashMap<String, Integer> hashMap) {
+  public List<My_pdsVO> list(HashMap<String, Object> hashMap) {
     return mybatis.selectList("my_pds.list", hashMap);
   }
 
@@ -79,4 +79,10 @@ public class My_pdsDAO implements My_pdsDAOInter{
   public int del_file(int pdsno) {
     return mybatis.delete("my_pds.del_file", pdsno);
   }
+
+  @Override
+  public int search_count(HashMap<String, Object> hashMap) {
+    return mybatis.selectOne("my_pds.search_count", hashMap);
+  }
+  
 }

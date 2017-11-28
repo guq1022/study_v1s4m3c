@@ -22,11 +22,13 @@
 **********************************************************************/
  body { /* body 태그 기본 속성 */
     font-family:'Roboto', sans-serif;
-    color: #FFF;
-    line-height:1.2em;
-    font-size:17px;
-    line-height:20px;
+    font-size: 18px;
+    margin: 0px;
+    padding: 0px;
+    color: #555555;
 }
+
+
 a { /* A 태그 기본 속성 */
     color:#181A1C;
     text-decoration: none;
@@ -57,18 +59,21 @@ p { /* 배너(Home) Slice 상세설명 */
 }
 
 .navbar { /* 상단메뉴 전체 관련 기본 속성 */
-    background: #181A1C;
-    margin-bottom:0;
+    background: #2d2d30;
     min-height:70px;
+    left: 0px;
+    right: 0px;
 }
 
 .navbar-fixed-top { /* 상단 고정 메뉴 기본 속성*/
     min-height:60px;
     height:60px;
     padding-top:0;
+        left: 0px;
+    right: 0px;
 }
 .navbar-inner {  /* 상단 메뉴 구성 기본 속성 */
-    background: #181A1C;
+    background: #2d2d30;
     border-radius:0;
     filter: none;
     border: none;
@@ -87,7 +92,7 @@ p { /* 배너(Home) Slice 상세설명 */
     margin:10px 3px;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
-    border: 1px solid #181A1C;
+    border: 1px solid #2d2d30;
     box-shadow: none;
     font-size:15px;
     text-shadow: none;
@@ -99,9 +104,9 @@ p { /* 배너(Home) Slice 상세설명 */
 .navbar .nav > li:hover> a,
 .navbar .nav > .active > a, 
 .navbar .nav > .active > a:focus {
-    border: 1px solid #FECE1A;
+    border: 1px solid #2d2d30;
     color: #fff;
-    background-color: #181A1C;
+    background-color: #2d2d30;
     transition: border-color 1s ease;
 }
 
@@ -112,7 +117,7 @@ p { /* 배너(Home) Slice 상세설명 */
 
 /* 상단메뉴 눌렀을 때 상태  */
 .navbar .nav > .active > a:hover {
-  background-color: #181A1C;
+  background-color: #2d2d30;
 }
 
 .nav-pills {
@@ -127,14 +132,14 @@ p { /* 배너(Home) Slice 상세설명 */
     margin-right:5px;
     padding-left:25px;
     padding-right:25px;
-    border: 1px solid #181A1C;
+    border: 1px solid #2d2d30;
 }
 
 .nav-pills > li > a:hover,
 .nav-pills > .active > a,
 .nav-pills > .active > a:hover,
 .nav-pills > .active > a:focus {
-    background: #181A1C;
+    background: #2d2d30;
     color: #FFFFFF;
 }
 
@@ -214,7 +219,7 @@ p { /* 배너(Home) Slice 상세설명 */
     text-align:center;
     width: 0;
     height: 0;
-    border-top: 30px solid #181A1C;
+    border-top: 30px solid #2d2d30;
     border-left: 585px outset transparent;
     border-right: 585px outset transparent;
     position: relative;
@@ -266,7 +271,7 @@ p { /* 배너(Home) Slice 상세설명 */
     color:#fff;
 }
 
-/*
+
 .button-sp, .button-sp:visited, .button-sp:focus {
     border:none;
     background-color:#FECE1A;
@@ -285,7 +290,7 @@ p { /* 배너(Home) Slice 상세설명 */
     background-color:#FECE1A;
     color:#181A1C;
 }
-*/
+
 
 /*********************************************************************
 2.3 썸네일 (Predefined bootstrap's thumbnail class)
@@ -377,7 +382,7 @@ p { /* 배너(Home) Slice 상세설명 */
 /*********************************************************************
 2.4 Socail icons
 *********************************************************************/
-/* 
+
  .social {
     list-style: none;
     float: none;
@@ -400,7 +405,7 @@ p { /* 배너(Home) Slice 상세설명 */
 }
 .social li a:hover {
     color:#181A1C;
-} */
+} 
 
 /**********************************************************************
 3. Sections 관련
@@ -436,7 +441,7 @@ p { /* 배너(Home) Slice 상세설명 */
 /******** 서비스안내 Section CSS ********/
  
 .primary-section { /* 서비스안내 Section 기본 속성 */
-    background:#181A1C;
+    background:#2d2d30;
 }
 
 .primary-section .triangle { /* 서비스안내 Section */
@@ -673,14 +678,29 @@ p { /* 배너(Home) Slice 상세설명 */
 3.4 Footer 관련
 ***********************************************************************/
 
- .footer { /* Footer 기본 속성 */
+.footer { /* Footer 기본 속성 */
     background: #181A1C;
     text-align: center;
+    /* position: relative; */
+    position:fixed;
+    bottom:0;
+    margin-top: 30px;
+    width: 100%;
+    font-size: 10px;
+    height: 40px;
 }
 
 .footer > p { /* Footer Text 속성 */
     color: #fff;
-    margin:0;
+    margin: 0;
+}
+
+.footer a{
+    color:#FECE1A;
+}
+
+.footer a:hover, .footer a:focus{
+    text-decoration: underline;
 }
 
 .scrollup { /* 위로 올리기 속성 */
@@ -694,8 +714,8 @@ p { /* 배너(Home) Slice 상세설명 */
     position:fixed;
     bottom:30px;
     right:20px;
-	border:1px solid #fff;
-    display:none;
+	  border:1px solid #fff;
+    display: block;
     background: #FECE1A;
 }
 
@@ -774,6 +794,9 @@ p { /* 배너(Home) Slice 상세설명 */
         text-align:center;
     }
 }
+
+
+
 @media (max-width: 767px) {
     .info-mail {
         width:90%;

@@ -77,11 +77,17 @@ public class My_pdsCont {
     return mav;
   }
   
-  // 공지사항 AJAX
+  /**
+   * 게시글 전송 AJAX + 검색 기능 추가 + 검색 결과 수 
+   * @param cateno
+   * @param stdlist_no
+   * @param pdsword
+   * @return
+   */
   @ResponseBody
   @RequestMapping(value="/mystudy/pds_notice.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
-  public String pds_notice(int cateno, int stdlist_no){
-    
+  public String pds_notice(int cateno, int stdlist_no, String pdsword, int nowpage){
+    System.out.println(" --> pds_notice 호출 (글 목록 출력 AJAX)");
     // mylistno를 먼저 조회해야함. -> stdlist_no, cateno 필요함.
     HashMap<String, Integer> hm_mylistno =new HashMap<String, Integer>();
     hm_mylistno.put("stdlist_no", stdlist_no);
@@ -89,26 +95,43 @@ public class My_pdsCont {
      
     // 여기서 mylistno를 가져옴. 
     My_std_catelistVO catelistVO=my_pdsProc.search_mylistno(hm_mylistno);
-    System.out.println(catelistVO.getMylistno());
-    System.out.println(catelistVO.getStdlist_no());
-    System.out.println(catelistVO.getCateno());
     
-    HashMap<String, Integer> hashMap =new HashMap<String, Integer>();
-    hashMap.put("mylist_no", catelistVO.getMylistno());
+    HashMap<String, Object> hashMap =new HashMap<String, Object>();
+    hashMap.put("mylistno", catelistVO.getMylistno());
+    hashMap.put("pdsword", pdsword);
+    
+    // ===============페이징을 위한 코드 시작==================================
+    int beginOfPage = (nowpage - 1) * 3;
+    
+    int startNum = beginOfPage + 1; // 시작 rownum, 1
+    int endNum = beginOfPage + 3; // 종료 rownum, 3
+    hashMap.put("startNum", startNum);
+    hashMap.put("endNum", endNum);
+    
+    //==========================================================================
     
     // 조회된 mylistno를 바탕으로 my_pds 조회 -> mylistno가 1인 글만 조회.
     List<My_pdsVO> list=my_pdsProc.list(hashMap);
+    int search_count=my_pdsProc.search_count(hashMap);  // 검색 결과 수 조회.
+    
+    System.out.println("search_count :"+search_count);
+    
+    String paging=my_pdsProc.paging(search_count, nowpage, cateno, stdlist_no);
     
     // list는 mylistno가 1인 글의 정보를 담고 있음.
-    // memberno를 가지고 있는데 이를 [회원이름]으로 바꿔야 함.
+    // memberno를 가지고 있는데 이를 [회원이름]으로 바꿔야 함. --> ok!
     for(int i=0; i<list.size(); i++){
       list.get(i).setMemname(my_pdsProc.search_memname(list.get(i).getMemberno()));
       list.get(i).setCateno(cateno);
-      list.get(i).setStdlist_no(stdlist_no);
-      
+      list.get(i).setStdlist_no(stdlist_no); 
+      list.get(i).setSearch_count(search_count);
     }
     
+    JSONObject test=new JSONObject();
+    test.put("paging", paging);
+    
     JSONArray reply = JSONArray.fromObject(list);
+    reply.add(test);
     
     return reply.toString();
   }
@@ -179,7 +202,7 @@ public class My_pdsCont {
     my_pdsVO.setPdsthumb(thumb);
     
     // ===================================================================================================
-    my_pdsVO.setPdsword("");  // 검색어 일단 보류
+    my_pdsVO.setPdsword(my_pdsVO.getPdsword());  // 검색어 일단 보류
     
     ArrayList<String> result_msg=new ArrayList<String>();
     ArrayList<String> result_link=new ArrayList<String>();
@@ -204,7 +227,11 @@ public class My_pdsCont {
     return mav;
   }
   
-  
+  /**
+   * 글 내용 조회 GET 컨트롤러
+   * @param pdsno
+   * @return
+   */
   @RequestMapping(value="/mystudy/read.do", method=RequestMethod.GET)
   public ModelAndView read(int pdsno){
     ModelAndView mav=new ModelAndView();
@@ -247,6 +274,13 @@ public class My_pdsCont {
   }
   
   //글 수정 처리 POST 컨트롤러
+  /**
+   * 글 수정 처리 POST 컨트롤러
+   * @param my_pdsVO
+   * @param request
+   * @param mylistno
+   * @return
+   */
   @RequestMapping(value="/mystudy/update.do", method=RequestMethod.POST)
   public ModelAndView update(My_pdsVO my_pdsVO, HttpServletRequest request, int mylistno){
     System.out.println(" --> update() POST 호출 ");

@@ -21,7 +21,7 @@ public interface My_pdsProcInter {
    * @param hashMap
    * @return List<My_pdsVO>
    */
-  public List<My_pdsVO> list(HashMap<String, Integer> hashMap);
+  public List<My_pdsVO> list(HashMap<String, Object> hashMap);
   
   /**
    * <select id="search_mylistno" parameterType="HashMap" resultType="int">
@@ -112,4 +112,14 @@ public interface My_pdsProcInter {
    * @return
    */
   public int del_file(int pdsno);
+  
+  /**
+   * <select id="search_count" parameterType="HashMap" resultType="int">
+   * 검색 결과 갯수 반환
+   * @param hashMap
+   * @return 검색 결과 수
+   */
+  public int search_count(HashMap<String, Object> hashMap);
+  
+  public String paging(int search_count, int nowPage, int cateno, int stdlist_no); 
 }

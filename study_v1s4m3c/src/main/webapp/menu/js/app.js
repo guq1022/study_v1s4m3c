@@ -71,18 +71,21 @@
     $(window).scroll(function () {
 
         //Display or hide scroll to top button 
-        if ($(this).scrollTop() > 10) {
+        if ($(this).scrollTop() > 30) {
             $('.scrollup').fadeIn();
+            $('.footer').css('position', 'relative');
+            $('.footer').css('height', '40px');
         } else {
             $('.scrollup').fadeOut();
+            $('.footer').css('position', 'fixed');
         }
 
-        if ($(this).scrollTop() > 10) {
+        if ($(this).scrollTop() > 30) {
             $('.navbar').addClass('navbar-fixed-top animated fadeInDown');
         } else {
             $('.navbar').removeClass('navbar-fixed-top animated fadeInDown');
         }
-
+        
         // Get container scroll position
         var fromTop = $(this).scrollTop() + topMenuHeight + 10;
 
@@ -105,9 +108,10 @@
         }
     });
 
-    /*
-    Function for scroliing to top
-    ************************************/
+    /***********************************************************************************
+     Scrollup 함수 시작
+    ***********************************************************************************/
+    
     $('.scrollup').click(function () {
         $("html, body").animate({
             scrollTop: 0
@@ -145,7 +149,7 @@
         });
 });
 
-    /*
+    /********************************************************************
     Sand newsletter
     **********************************************************************/
     $('#subscribe').click(function () {
