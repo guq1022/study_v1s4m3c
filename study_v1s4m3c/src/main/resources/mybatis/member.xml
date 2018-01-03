@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{memauth}, #{membirth}, #{memgender}, #{memaddress}, #{memphone}, #{memsns}, #{memintro}, #{memphoto}, #{memphoto_t}, #{memsize}, #{mbirthvb}, 
     #{mgendervb}, #{maddressvb}, #{mphonevb}, #{msnsvb}, #{mintrovb}, #{mphotovb}, sysdate)
   </insert>
-  
+    
   <select id="check_id" resultType="int" parameterType="String">
     SELECT COUNT(memid) as cnt
     FROM member
