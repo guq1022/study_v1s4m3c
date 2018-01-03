@@ -121,5 +121,14 @@ public interface My_pdsProcInter {
    */
   public int search_count(HashMap<String, Object> hashMap);
   
-  public String paging(int search_count, int nowPage, int cateno, int stdlist_no); 
+  /**
+   * 페이징 메소드
+   * @param search_count
+   * @param nowPage
+   * @param cateno
+   * @param stdlist_no
+   * @return
+   */
+  public String paging(int search_count, int nowPage, int cateno, int stdlist_no);
+  
 }

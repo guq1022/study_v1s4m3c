@@ -34,4 +34,21 @@ public interface StudyProcInter {
    * @return List<StudyListVO>
    */
   public List<StudyListVO> mystudylist(int memberno);
+  
+  /**
+   * 현재 회원이 신청한 스터디 정보 및 상태
+   * @param memberno
+   * @return
+   */
+  public List<My_apply_listVO> my_apply_list(int memberno);
+  
+  /**
+   * <xmp>
+   * <delete id="cancel_apply" parameterType="int">
+   * 스터디 참가 신청 취소
+   * </xmp> 
+   * @param recuritno
+   * @return
+   */
+  public int cancel_apply(int recuritno);
 }

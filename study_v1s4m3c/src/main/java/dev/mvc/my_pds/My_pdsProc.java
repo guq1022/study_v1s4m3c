@@ -20,6 +20,7 @@ public class My_pdsProc implements My_pdsProcInter{
   private My_pdsDAOInter my_pdsDAO;
   
   @Override
+  
   public int insert(My_pdsVO my_pdsVO) {
     return my_pdsDAO.insert(my_pdsVO);
   }
@@ -32,7 +33,7 @@ public class My_pdsProc implements My_pdsProcInter{
   @Override
   public My_std_catelistVO search_mylistno(HashMap<String, Integer> hashMap) {
     return my_pdsDAO.search_mylistno(hashMap);
-  }
+  } 
 
   @Override
   public My_std_catelistVO search_cateno_stdlist_no(int mylistno) {

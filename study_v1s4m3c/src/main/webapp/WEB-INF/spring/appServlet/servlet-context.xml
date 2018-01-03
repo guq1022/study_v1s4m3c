@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:websocket="http://www.springframework.org/schema/websocket"
+  xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -20,8 +22,9 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/" />
 		<beans:property name="suffix" value=".jsp" />
+    <beans:property name="order" value="1"/>
 	</beans:bean>
-	
+	 
 	<context:component-scan base-package="dev.mvc.study" />
   
   <!-- ====안희홍 시작==== -->
@@ -31,15 +34,52 @@
   <!-- ==================== -->
   
   
-  <!-- ====이동석==== -->
+  <!-- ====이동석==== --> 
+  <context:component-scan base-package="dev.mvc.msg_socket"/>
   <context:component-scan base-package="dev.mvc.mystudy" />
   <context:component-scan base-package="dev.mvc.my_std_catelist" />
   <context:component-scan base-package="dev.mvc.my_pds" />
+  <context:component-scan base-package="dev.mvc.message" />
+  <context:component-scan base-package="dev.mvc.memsearch" />
   <!-- ============== -->
-	
-  <!-- FORM의 FILE 태그를 읽어 MultipartFile 객체로 변환 -->
+  
+  <!-- 이지은 -->
+  <context:component-scan base-package="dev.mvc.member" /> 
+  
+  <!-- =====웹 소켓==== -->
+  <!-- <context:component-scan base-package="dev.mvc.websocket" /> -->
+  <!-- ============== --> 
+  
+  
+  <!-- FORM의 FILE 태그를 읽어 MultipartFile 객체로 변환 --> 
   <beans:bean id="multipartResolver"
     class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
   </beans:bean>
-	
+  
+  
+  <beans:bean id="ChatWebSocketHandler" class="dev.mvc.msg_socket.MsgWebSocketHandler"/>
+  <websocket:handlers> 
+    <websocket:mapping handler="ChatWebSocketHandler" path="/chat-ws"/>
+    
+    <websocket:handshake-interceptors>
+       <beans:bean class="dev.mvc.msg_socket.HandshakeInterceptor"/>
+  </websocket:handshake-interceptors>
+
+  </websocket:handlers> 
+  
+<!-- 
+  웹 소켓 핸들러 연결 
+  <websocket:handlers>
+    <websocket:mapping path="/websocket/response.do" handler="myHandler"/>
+  </websocket:handlers>
+  
+  <beans:bean id="myHandler" class="dev.mvc.websocket.SocketHandler"/> -->
+  
+  <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+  </beans:bean>
+  
+  <beans:bean id="beanNameResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+    <beans:property name="order" value="0" />
+  </beans:bean>
+ 
 </beans:beans>

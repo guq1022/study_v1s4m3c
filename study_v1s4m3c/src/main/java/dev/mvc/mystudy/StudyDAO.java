@@ -36,11 +36,16 @@ public class StudyDAO implements StudyDAOInter{
     return list;
   }
 
-  /*@Override
-  public List<MemberlistVO> join_test() {
-    List<MemberlistVO> join=mybatis.selectList("memberlist.jointest");
-    return join;
-  }*/
-  
-  
+  @Override
+  public List<My_apply_listVO> my_apply_list(int memberno) {
+    List<My_apply_listVO> my_apply_list=mybatis.selectList("studylist.my_apply_list", memberno); 
+    return my_apply_list; 
+  }
+
+  @Override
+  public int cancel_apply(int recuritno) {
+    int result=mybatis.delete("studylist.cancel_apply", recuritno);
+    return result;
+  } 
+
 }

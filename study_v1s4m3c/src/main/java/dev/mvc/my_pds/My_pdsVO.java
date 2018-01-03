@@ -49,6 +49,8 @@ public class My_pdsVO {
    */
   private String memname;
   
+  private String memid;
+  
   /**
    * 임시저장하여 사용하기위해 선언.
    */
@@ -60,12 +62,42 @@ public class My_pdsVO {
    */
   private int search_count;
   
+  /**
+   * 페이징 변수
+   */
+  private int RECORD_PER_PAGE;
+  private int PAGE_PER_BLOCK;
+  
   /**================================================================*/  
   
+  public String getMemid() {
+    return memid;
+  }
+
+  public void setMemid(String memid) {
+    this.memid = memid;
+  }
+
+  public int getRECORD_PER_PAGE() {
+    return RECORD_PER_PAGE;
+  }
+
+  public void setRECORD_PER_PAGE(int rECORD_PER_PAGE) {
+    RECORD_PER_PAGE = rECORD_PER_PAGE;
+  }
+
+  public int getPAGE_PER_BLOCK() {
+    return PAGE_PER_BLOCK;
+  }
+
+  public void setPAGE_PER_BLOCK(int pAGE_PER_BLOCK) {
+    PAGE_PER_BLOCK = pAGE_PER_BLOCK;
+  }
+ 
   public int getStdlist_no() {
     return stdlist_no;
   }
-
+  
   public int getSearch_count() {
     return search_count;
   }

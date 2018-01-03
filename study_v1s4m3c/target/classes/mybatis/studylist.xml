@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <!-- 스터디모집내용을 삭제한다. -->
   <delete id="delete" parameterType="int">
-    DELETE FROM studylist 
+    DELETE FROM studylist
     WHERE stdlist_no = #{stdlist_no}
   </delete>
   

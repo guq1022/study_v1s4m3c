@@ -80,6 +80,9 @@ public class My_pdsDAO implements My_pdsDAOInter{
     return mybatis.delete("my_pds.del_file", pdsno);
   }
 
+  /**
+   * 조회된 글 수
+   */
   @Override
   public int search_count(HashMap<String, Object> hashMap) {
     return mybatis.selectOne("my_pds.search_count", hashMap);

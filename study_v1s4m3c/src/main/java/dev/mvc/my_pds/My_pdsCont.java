@@ -44,7 +44,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import dev.mvc.my_std_catelist.My_std_catelistProcInter;
+import dev.mvc.memsearch.MemsearchProcInter;
+import dev.mvc.memsearch.MemsearchVO;
+import dev.mvc.message.MessageProcInter; 
 import dev.mvc.my_std_catelist.My_std_catelistVO;
 
 import nation.web.tool.Tool;
@@ -58,6 +60,14 @@ public class My_pdsCont {
   @Autowired
   @Qualifier("dev.mvc.my_pds.My_pdsProc")
   private My_pdsProcInter my_pdsProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.memsearch.MemsearchProc")
+  private MemsearchProcInter memsearchProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.message.MessageProc")
+  private MessageProcInter messageProc;
   
   @RequestMapping(value="/mystudy/mystudy_space.do", method=RequestMethod.GET)
   public ModelAndView myStudy_space(){
@@ -92,7 +102,7 @@ public class My_pdsCont {
     HashMap<String, Integer> hm_mylistno =new HashMap<String, Integer>();
     hm_mylistno.put("stdlist_no", stdlist_no);
     hm_mylistno.put("cateno", cateno);
-     
+    
     // 여기서 mylistno를 가져옴. 
     My_std_catelistVO catelistVO=my_pdsProc.search_mylistno(hm_mylistno);
     
@@ -116,22 +126,26 @@ public class My_pdsCont {
     
     System.out.println("search_count :"+search_count);
     
-    String paging=my_pdsProc.paging(search_count, nowpage, cateno, stdlist_no);
+    String paging=my_pdsProc.paging(search_count, nowpage, cateno, stdlist_no); // 페이징 결과 값.
     
     // list는 mylistno가 1인 글의 정보를 담고 있음.
     // memberno를 가지고 있는데 이를 [회원이름]으로 바꿔야 함. --> ok!
     for(int i=0; i<list.size(); i++){
-      list.get(i).setMemname(my_pdsProc.search_memname(list.get(i).getMemberno()));
+      MemsearchVO memsearchVO=memsearchProc.search(list.get(i).getMemberno()); // 회원 번호로 아이디, 이름을 가지는 VO 객체 정의
+      
+      list.get(i).setMemid(memsearchVO.getMemid());     // 아이디 조회 후 저장
+      list.get(i).setMemname(memsearchVO.getMemname()); // 이름 조회 후 저장
       list.get(i).setCateno(cateno);
       list.get(i).setStdlist_no(stdlist_no); 
       list.get(i).setSearch_count(search_count);
     }
     
-    JSONObject test=new JSONObject();
-    test.put("paging", paging);
+    // paging 메소드를 통해 산출된 결과를 JSON으로 변경하기 위해 저장.
+    JSONObject page=new JSONObject();
+    page.put("paging", paging);
     
     JSONArray reply = JSONArray.fromObject(list);
-    reply.add(test);
+    reply.add(page);   // JSONArray에 추가.
     
     return reply.toString();
   }
@@ -143,20 +157,20 @@ public class My_pdsCont {
    * @return
    */
   @RequestMapping(value="/mystudy/create.do", method=RequestMethod.GET)
-  public ModelAndView mypds_create(int stdlist_no, int cateno){
+  public ModelAndView mypds_create(int stdlist_no){
     System.out.println(" --> mypds_create [GET]호출");
     ModelAndView mav=new ModelAndView();
     mav.setViewName("/my_pds/my_pds_create");
     
     // mylistno를 넘겨줘야함.
     // mylistno를 먼저 조회해야함. -> stdlist_no, cateno 필요함.
-    HashMap<String, Integer> hm_mylistno =new HashMap<String, Integer>();
+    /*HashMap<String, Integer> hm_mylistno =new HashMap<String, Integer>();
     hm_mylistno.put("stdlist_no", stdlist_no);
     hm_mylistno.put("cateno", cateno);
     
     My_std_catelistVO catelistVO=my_pdsProc.search_mylistno(hm_mylistno);
     
-    mav.addObject("mylistno", catelistVO.getMylistno());
+    mav.addObject("mylistno", catelistVO.getMylistno());*/
     
     return mav;
   }
@@ -180,8 +194,15 @@ public class My_pdsCont {
     ModelAndView mav=new ModelAndView();
     mav.setViewName("/my_pds/message");
     
+    // mylistno 구하기
+    HashMap<String, Integer> hm_mylistno =new HashMap<String, Integer>();
+    hm_mylistno.put("stdlist_no", stdlist_no);
+    hm_mylistno.put("cateno", cateno);
+    My_std_catelistVO catelistVO=my_pdsProc.search_mylistno(hm_mylistno);
+    my_pdsVO.setMylistno(catelistVO.getMylistno());
+    
     System.out.println("getSpring_file() : "+my_pdsVO.getFile1MF());
-  //==파일 전송 코드 시작===============================================================================
+    //==파일 전송 코드 시작===============================================================================
     String upDir=Tool.getRealPath(request, "/my_pds/storage");
     MultipartFile file1MF=my_pdsVO.getFile1MF();    // 입려되는 파일 명
     long size1=file1MF.getSize();
@@ -213,13 +234,13 @@ public class My_pdsCont {
     
     if(count==1){ // 등록 성공
       result_msg.add("글 등록에 성공하였습니다.");
-      result_link.add("<button type='button' class='btn btn-info' onclick=\"location.href='./read.do?stdlist_no="+stdlist_no+"&pdsno="+lastest_pdsno+"&cateno="+cateno+"'\">등록 확인</button>");
+      result_link.add("<button type='button' class='btn btn-info' onclick=\"location.href='./read.do?stdlist_no="+stdlist_no+"&pdsno="+lastest_pdsno+"'\">등록 확인</button>");
     }else{ // 등록 실패
       result_msg.add("글 등록에 실패하였습니다.");
       result_msg.add("관리자에게 문의해주세요.");
       result_link.add("<button type='button' class='btn btn-warning' onclick=\"history.back()\">다시 시도</button>");
     }
-    result_link.add("<button type='button' class='btn btn-info' onclick=\"location.href='./mystudy_space.do?stdlist_no="+stdlist_no+"&cateno="+cateno+"'\">글 목록 가기</button>");
+    result_link.add("<button type='button' class='btn btn-info' onclick=\"location.href='./mystudy_space.do?stdlist_no="+stdlist_no+"'\">글 목록 가기</button>");
     
     mav.addObject("result_msg", result_msg);
     mav.addObject("result_link", result_link); 
@@ -349,13 +370,13 @@ public class My_pdsCont {
     
     if(count==1){ // 수정 성공
       result_msg.add("글 수정에 성공하였습니다.");
-      result_link.add("<button type='button' onclick=\"location.href='./read.do?stdlist_no="+stdlist_no+"&pdsno="+my_pdsVO.getPdsno()+"&cateno="+cateno+"'\">변경 확인</button>");
+      result_link.add("<button type='button' onclick=\"location.href='./read.do?stdlist_no="+stdlist_no+"&pdsno="+my_pdsVO.getPdsno()+"'\">변경 확인</button>");
     }else{ // 수정 실패
       result_msg.add("글 수정에 실패하였습니다.");
       result_msg.add("관리자에게 문의해주세요.");
       result_link.add("<button type='button' onclick=\"history.back()\">다시 시도</button>");
     }
-    result_link.add("<button type='button' onclick=\"location.href='./mystudy_space.do?stdlist_no="+stdlist_no+"&cateno="+cateno+"'\">글 목록 가기</button>");
+    result_link.add("<button type='button' onclick=\"location.href='./mystudy_space.do?stdlist_no="+stdlist_no+"'\">글 목록 가기</button>");
     
     mav.addObject("result_msg", result_msg);
     mav.addObject("result_link", result_link);
@@ -411,7 +432,7 @@ public class My_pdsCont {
       result_msg.add("관리자에게 문의해주세요.");
       result_link.add("<button type='button' onclick=\"history.back()\">다시 시도</button>");
     }
-    result_link.add("<button type='button' onclick=\"location.href='./mystudy_space.do?stdlist_no="+stdlist_no+"&cateno="+cateno+"'\">글 목록 가기</button>");
+    result_link.add("<button type='button' onclick=\"location.href='./mystudy_space.do?stdlist_no="+stdlist_no+"'\">글 목록 가기</button>");
     
     mav.addObject("result_msg", result_msg);
     mav.addObject("result_link", result_link);
@@ -469,5 +490,61 @@ public class My_pdsCont {
    
    obj.put("result", result);
    return obj.toJSONString();
+ }
+ 
+ // 웹 소켓 테스트
+ @RequestMapping(value="/websocket/test.do" , method=RequestMethod.GET)
+ public ModelAndView test(){
+   ModelAndView mav=new ModelAndView();
+   mav.setViewName("/websocket/test");
+   return mav;
+ }
+ 
+ /**
+  * 회원 정보를 눌러서 쪽지를 바로 보낼때.
+  * @return
+  */
+ @ResponseBody
+ @RequestMapping(value="/mystudy/msn.do", method=RequestMethod.POST, produces="text/plain; charset=utf-8")
+ public String direct_msn(int memberno_send, int memberno_recv, String msg_title, String msg_content){
+   
+   int msg_count=0; // 쪽지 DB 처리 결과 변수
+   String result=""; // 쪽지 전송 결과 변수
+   
+   JSONObject msg_obj=new JSONObject();
+   
+   /*System.out.println("memberno_send:"+memberno_send);
+   System.out.println("memberno_recv:"+memberno_recv);
+   System.out.println("msg_title:"+msg_title);
+   System.out.println("msg:"+msg_content);*/
+   
+   // 전달한 memberno_send, memberno_recv가 유효한지 검사.
+   int confirm_send=messageProc.member_count(memberno_send);  // 발송자 회원 번호 유효 검사
+   int confirm_recv=messageProc.member_count(memberno_recv);  // 수신자 회원 번호 유효 검사
+   
+   if(confirm_send==1 && confirm_recv==1){
+     // 전달받은 parameter로 쪽지를 DB에 저장.
+     msg_count=messageProc.msg_create(memberno_send, memberno_recv, msg_title, msg_content);
+     
+     int msg_no=messageProc.serach_last_msg_no();  // 방금 저장된 쪽지 번호 
+     
+     // 저장이 성공적으로 되었으면
+     if(msg_count==1){ // 쪽지 저장 성공
+       messageProc.msgsend_insert(memberno_send, msg_no);
+       messageProc.msgrecv_insert(memberno_recv, msg_no);
+       result="OK";
+     }else{            // 쪽지 저장 실패
+       result="FAIL";
+     }
+   
+   }else if(confirm_send!=1){
+     result="no_sender";
+   }else if(confirm_recv!=1){
+     result="no_receiver";
+   }
+   
+   msg_obj.put("result", result);
+   
+   return msg_obj.toJSONString();
  }
 }

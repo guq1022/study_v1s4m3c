@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans">
-
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:websocket="http://www.springframework.org/schema/websocket"
+  xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
 <!-- Root Context: defines shared resources visible to all other web components -->
 <!-- Oracle Connection Pool: 안정적인 데이터베이스 연결 지원 -->
 
@@ -22,16 +26,19 @@
 <!-- typeAliasesPackage: Mybatis에서 클래스 사용시 패키지 생략 가능 -->
 <!-- mapperLocations: Mybatis 설정 파일인 xml 위치 등록 -->
 
-
 <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
   <property name="dataSource" ref="dataSource"/>
   <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
   <property value="dev.mvc.studylist,
                    dev.mvc.recruit,
                    dev.mvc.reply,
+                   dev.mvc.member, 
                    dev.mvc.mystudy,
                    dev.mvc.my_std_catelist,
+                   dev.mvc.message,
+                   dev.mvc.memsearch,
                    dev.mvc.my_pds" name="typeAliasesPackage"/>
+  <!-- 매핑될 xml파일의 위치 정보를 저장한다. -->
   <property value="classpath:mybatis/*.xml" name="mapperLocations"/>
 </bean>
 <!-- Spring이 Mybatis를 사용할때 호출하는 객체 -->
@@ -39,4 +46,7 @@
   <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">
     <constructor-arg ref="sqlSessionFactory"/>
   </bean>
+  
+     
+  
 </beans>

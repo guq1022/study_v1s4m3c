@@ -22,14 +22,13 @@
 
 <script type="text/javascript">
 
-
-function deletePds(stdlist_no, pdsno, cateno){
+function deletePds(stdlist_no, pdsno){
   var del_modal=$('#delete_Modal');
   del_modal.modal();
   
   $(':password').focus(); // 비밀번호 입력창에 포커스
   $('#modal_footer', del_modal).attr("data-pdsno",pdsno);
-  $('#confirm_content', del_modal).attr("onclick", "location.href='./read.do?stdlist_no="+stdlist_no+"&pdsno="+pdsno+"&cateno="+cateno+"'");   // "삭제 전 글 확인하러 가기" 의 속성값을 추가.
+  $('#confirm_content', del_modal).attr("onclick", "location.href='./read.do?stdlist_no="+stdlist_no+"&pdsno="+pdsno+"'");   // "삭제 전 글 확인하러 가기" 의 속성값을 추가.
 }
 
 /**
@@ -159,7 +158,7 @@ function like(pdsno){
       <div id="modal_footer" class="modal-footer">
         <form id="delete_frm" name="delete_frm" style="margin: 0px;" method="POST" action="./delete.do" onsubmit="return send();">
           <input type="hidden" name="stdlist_no" id="stdlist_no" value="${param.stdlist_no}">
-          <input type="hidden" name="cateno" id="cateno" value="${param.cateno}">
+          <input type="hidden" name="cateno" id="cateno" value="${cookie.cateno.value }">
           <input type="hidden" name="pdsno" id="pdsno" value="">
           
           <span><img src='/study/my_pds/images/passwd.png'>비밀번호:</span> 
@@ -192,9 +191,9 @@ function like(pdsno){
     </div>
   </div>
   <!-- 비밀번호 검사 결과 Modal END -->
-    
+   
   <DIV>
-    <button class="btn btn-success" style="float: left; margin-top: 10px;" onclick="location.href='/study/mystudy/mystudy_space.do?stdlist_no=${param.stdlist_no}&cateno=${param.cateno}'"><i class="icon-left-open"></i>My Study</button>
+    <button class="btn btn-success" style="float: left; margin-top: 10px;" onclick="location.href='/study/mystudy/mystudy_space.do?stdlist_no=${param.stdlist_no}'"><i class="icon-left-open"></i>My Study</button>
     <h3 style="float: right"><img src="./images/pencile.png">글</h3>
     <hr style="color: #000000; border: solid 2px #000000; clear: both;">
   </DIV> 
@@ -202,9 +201,9 @@ function like(pdsno){
   <DIV style="border: solid 1px #000000; margin-bottom: 20px; padding: 20px;">
   
     <DIV style="position: fixed; right: 10px; top: 200px;">
-      <button class="side_btngrp btn btn-success btn-small" style="width: 100%;" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=${param.cateno }'">등록</button><br><br>
-      <button class="side_btngrp btn btn-warning btn-small" style="width: 100%;" onclick="location.href='./update.do?stdlist_no=${param.stdlist_no}&pdsno=${param.pdsno }&cateno=${param.cateno }'">수정</button><br><br>
-      <button class="side_btngrp btn btn-danger btn-small" style="width: 100%;" onclick="deletePds('${param.stdlist_no}', '${param.pdsno}', '${param.cateno}')">삭제</button><br><br>
+      <button class="side_btngrp btn btn-success btn-small" style="width: 100%;" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}'">등록</button><br><br>
+      <button class="side_btngrp btn btn-warning btn-small" style="width: 100%;" onclick="location.href='./update.do?stdlist_no=${param.stdlist_no}&pdsno=${param.pdsno }'">수정</button><br><br>
+      <button class="side_btngrp btn btn-danger btn-small" style="width: 100%;" onclick="deletePds('${param.stdlist_no}', '${param.pdsno}')">삭제</button><br><br>
       <button class="side_btngrp btn btn-info btn-small" style="width: 100%;" onclick="like(${param.pdsno });"><img id="like_img" src='/study/my_pds/images/like_after.png'></button>
     </DIV>
  

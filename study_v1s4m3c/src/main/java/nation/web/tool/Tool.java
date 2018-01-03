@@ -321,8 +321,9 @@ public class Tool {
     str = str.replaceAll("<", "&lt;");
     str = str.replaceAll(">", "&gt;");
     str = str.replaceAll("'", "&#39;");
-    str = str.replaceAll("\"", "&quot;");
+    str = str.replaceAll("\"", "&quot;"); 
     str = str.replaceAll("\r\n", "<BR>");
+    str = str.replaceAll("%", "&#37"); 
     
     return str;
   }
@@ -337,6 +338,23 @@ public class Tool {
     str = str.replaceAll(">", "&gt;");
     str = str.replaceAll("'", "&#39;");
     str = str.replaceAll("\"", "&quot;");
+    
+    return str;
+  }
+  
+  /**
+   * HTML 특수 문자의 변경
+   * @param str
+   * @return
+   */
+  public static synchronized String convertChar3(String str) {
+    str = str.replaceAll("<", "&lt;");
+    str = str.replaceAll(">", "&gt;");
+    str = str.replaceAll("'", "&#39;");
+    str = str.replaceAll("\"", "&quot;"); 
+    str = str.replaceAll("\r\n", "<BR>");
+    str = str.replaceAll("\n", "<BR>");
+    str = str.replaceAll("%", "&#37"); 
     
     return str;
   }

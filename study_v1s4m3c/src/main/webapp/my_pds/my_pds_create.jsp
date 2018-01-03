@@ -37,7 +37,7 @@
 <DIV class='content'>
 
   <DIV>
-    <button class="btn btn-success" style="float: left; margin-top: 10px;" onclick="location.href='/study/mystudy/mystudy_space.do?stdlist_no=${param.stdlist_no}&cateno=${param.cateno }'"><i class="icon-left-open"></i>My Study</button>
+    <button class="btn btn-success" style="float: left; margin-top: 10px;" onclick="location.href='/study/mystudy/mystudy_space.do?stdlist_no=${param.stdlist_no}'"><i class="icon-left-open"></i>My Study</button>
     <h3 style="float: right"><img src="./images/pencile.png">글 등록하기</h3>
     <hr style="color: #000000; border: solid 2px #000000; clear: both;">
   </DIV>
@@ -48,8 +48,7 @@
       
         <!-- 세션에 있는 회원 값 넣어야 함. -->
         <input type="hidden" name="memberno" id="memberno" value="1">
-        <input type="hidden" name="cateno" id="cateno" value=${param.cateno }>
-        <input type="hidden" name="mylistno" id="mylistno" value=${mylistno }>
+        <input type="hidden" name="cateno" id="cateno" value=${cookie.cateno.value }>
         <input type="hidden" name="stdlist_no" id="stdlist_no" value=${param.stdlist_no }>
       
         <div class="control-group">

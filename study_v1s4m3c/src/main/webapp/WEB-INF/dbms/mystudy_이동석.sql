@@ -15,17 +15,21 @@
  ***************************************************************************************************************/
 
 -- 회원 예시 데이터 1 (by 안희홍)
-INSERT INTO member(memberno, mememail, mempasswd, memname, memsignkey, memconfirm, memauth, membirth, memgender, memaddress, memphone, 
+INSERT INTO member(memberno, memid, mememail, mempasswd, memname, memsignkey, memconfirm, memauth, membirth, memgender, memaddress, memphone, 
 memsns, memintro, memphoto, memphoto_t, memsize, mbirthvb, mgendervb, maddressvb, mphonevb, msnsvb, mintrovb, mphotovb, memdate)
-VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'test1@gmail.com', '1234', '회원1', 'ascsdawe12382347',
+VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'test1', 'test1@gmail.com', '1234', '회원1', 'ascsdawe12382347',
 'Y', 'B', '19891025', '여', '서울 강북구 수유동', '01012345678', '인스타그램', '안녕하세요', 'myphoto.jpg', 'myphoto_t.jpg', 0, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', sysdate);
-INSERT INTO member(memberno, mememail, mempasswd, memname, memsignkey, memconfirm, memauth, membirth, memgender, memaddress, memphone, 
+
+
+INSERT INTO member(memberno, memid, mememail, mempasswd, memname, memsignkey, memconfirm, memauth, membirth, memgender, memaddress, memphone, 
 memsns, memintro, memphoto, memphoto_t, memsize, mbirthvb, mgendervb, maddressvb, mphonevb, msnsvb, mintrovb, mphotovb, memdate)
-VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'test2@gmail.com', '1234', '회원2', 'ascsdawe12382347',
+VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'test2', 'test2@gmail.com', '1234', '회원2', 'ascsdawe12382347',
 'Y', 'B', '19891025', '여', '서울 강북구 수유동', '01012345678', '인스타그램', '안녕하세요', 'myphoto.jpg', 'myphoto_t.jpg', 0, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', sysdate);
-INSERT INTO member(memberno, mememail, mempasswd, memname, memsignkey, memconfirm, memauth, membirth, memgender, memaddress, memphone, 
+
+
+INSERT INTO member(memberno, memid, mememail, mempasswd, memname, memsignkey, memconfirm, memauth, membirth, memgender, memaddress, memphone, 
 memsns, memintro, memphoto, memphoto_t, memsize, mbirthvb, mgendervb, maddressvb, mphonevb, msnsvb, mintrovb, mphotovb, memdate)
-VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'test3@gmail.com', '1234', '회원3', 'ascsdawe12382347',
+VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'test3', 'test3@gmail.com', '1234', '회원3', 'ascsdawe12382347',
 'Y', 'B', '19891025', '여', '서울 강북구 수유동', '01012345678', '인스타그램', '안녕하세요', 'myphoto.jpg', 'myphoto_t.jpg', 0, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', sysdate);
 
 
@@ -33,18 +37,18 @@ VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'test3@gmail.co
 INSERT INTO "STUDY"."STUDYLIST" (STDLIST_NO, STDLIST_TITLE, STDLIST_EMAIL, STDLIST_TOPIC, STDLIST_TIME,
 STDLIST_AREA, STDLIST_DOW, STDLIST_TOT_NUM, STDLIST_CURR_NUM, STDLIST_CONTENT, STDLIST_CNT,
 STDLIST_RECOM_CNT, STDLIST_DATE, MEMBERNO, CATENO) 
-VALUES ('1', '영어준비반', 'lee33398@naver.com', '영어', '6시',
+VALUES ('3', '영어준비반', 'lee3339@naver.com', '영어', '6시',
 '서울 종로구', '월수금', '4', '1', '영어를 같이 해요!', '0',
 '0', TO_DATE('2017-11-21 12:07:45', 'YYYY-MM-DD HH24:MI:SS'), '1', '10')
 
--- category 테이블의 insert ( 팀장:이지은 sql 참고 )
-INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('1', '내스터디', '1', 'Y')
-INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('2', '내스터디-공지사항', '2', 'Y')
-INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('3', '내스터디-자유게시판', '3', 'Y')
-INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('4', '내스터디-자료실', '4', 'Y')
-INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('5', '내스터디-스터디 관리', '5', 'Y')
+-- category 테이블의 insert ( 팀장:이지은 sql 참고 ) 
+INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('1', '내스터디', '1', 'Y');
+INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('2', '내스터디-공지사항', '2', 'Y');
+INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('3', '내스터디-자유게시판', '3', 'Y');
+INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('4', '내스터디-자료실', '4', 'Y');
+INSERT INTO "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) VALUES ('5', '내스터디-스터디 관리', '5', 'Y');
 
-insert into category(cateno,catename,cateseqno) values(10, '스터디그룹리스트', 1);
+insert into "STUDY"."CATEGORY" (CATENO, CATENAME, CATESEQNO, CATEVISIBLE) values(10, '스터디그룹리스트', 1, 'Y');
 
 
 CREATE TABLE my_std_catelist(
@@ -449,22 +453,22 @@ WHERE pdsno=부모글 번호 AND mycom_rank > (현재 댓글을 달고자하는 부모 댓글의 ran
  */
 
 
-
-
 /**********************************/
 /* Table Name: 쪽지 테이블 */
 /**********************************/
+drop table message;
+
 CREATE TABLE message(
     msn_no                            NUMBER(10)     NOT NULL    PRIMARY KEY,
     memberno_send                     NUMBER(10)     NULL ,
     memberno_rev                      NUMBER(10)     NULL ,
     msn_title                         VARCHAR2(100)    NULL ,
     msn_content                       VARCHAR2(500)    NULL ,
-    msn_file                          VARCHAR2(10)     NULL ,
-    msn_size                          NUMBER(10)     NULL ,
-    msn_confirm                       VARCHAR2(10)     NULL ,
-    msn_date                          DATE     NULL ,
+    msn_send_del                      VARCHAR2(10)     DEFAULT 'N'     NOT NULL,
+    msn_recv_del                      VARCHAR2(10)     DEFAULT 'N'     NOT NULL,
+    msn_confirm                       VARCHAR2(10)     DEFAULT 'N'     NOT NULL ,
     msn_rev_date                      DATE     NULL ,
+    msn_date                          DATE     NULL ,
   FOREIGN KEY (memberno_send) REFERENCES member (memberno),
   FOREIGN KEY (memberno_rev) REFERENCES member (memberno)
 );
@@ -475,11 +479,11 @@ COMMENT ON COLUMN message.memberno_send is '보낸이(회원번호)';
 COMMENT ON COLUMN message.memberno_rev is '받는이(회원번호)';
 COMMENT ON COLUMN message.msn_title is '쪽지 제목';
 COMMENT ON COLUMN message.msn_content is '쪽지 내용';
-COMMENT ON COLUMN message.msn_file is '쪽지 파일';
-COMMENT ON COLUMN message.msn_size is '쪽지 파일 사이즈';
+COMMENT ON COLUMN message.msn_send_del is '발신자 삭제여부';
+COMMENT ON COLUMN message.msn_recv_del is '수신자 삭제여부';
 COMMENT ON COLUMN message.msn_confirm is '쪽지 수신 여부';
-COMMENT ON COLUMN message.msn_date is '쪽지 전송일';
 COMMENT ON COLUMN message.msn_rev_date is '쪽지 수신일';
+COMMENT ON COLUMN message.msn_date is '쪽지 전송일';
 
 
 
@@ -495,19 +499,103 @@ memberno_rev, msn_title, msn_content, msn_file, msn_size, msn_confirm, msn_date,
 VALUES((SELECT NVL(MAX(msn_no), 0) + 1 as msn_no FROM message), 2, 1, '[답변]스터디 문의드려요~', '안녕하세요.', '', 0, 'Y', sysdate, sysdate);
 
 2) 조회
- -- 1번 회원에게 온 쪽지 조회
+ -- 내가 보낸 쪽지 조회
 SELECT *
 FROM message
-WHERE memberno_rev=1;
+WHERE memberno_send='내 아이디';
 
--- 읽지않은 쪽지 조회.
+2-1) 내가 받은 쪽지 조회
 SELECT *
 FROM message
-WHERE memberno_rev=1 AND confirm='N';
+WHERE memberno_rev='내 아이디';
 
+-- (전체)상대가 읽지않은 쪽지 조회.
+SELECT *
+FROM message
+WHERE memberno_send='내 아이디번호' AND confirm='N';
+
+-- (전체)상대가 읽은 쪽지 목록 조회
+SELECT *
+FROM message
+WHERE memberno_send='내 아이디번호' AND confirm='Y'
+
+-- 특정 상대가 읽지 않은 쪽지 조회
+SELECT *
+FROM message
+WHERE memberno_send='내 아이디번호' AND memberno_rev='상대 아이디번호' AND confirm='N'
+
+3) 상대가 메세지를 읽었을 때. confirm -> 'Y', msn_rev_date -> '읽은 시간'
+UPDATE message
+SET confirm='Y', msn_rev_date='읽은시간'
+WHERE msn_no='1'
 
 3) 삭제
 DELETE
 FROM message
 WHERE msn_no=1;
+
+
+/**********************************/
+/* Table Name: 쪽지 송신 내역 테이블 */
+/**********************************/
+CREATE TABLE msgsend(
+    msend_no                          NUMBER(10)     NOT NULL    PRIMARY KEY,
+    memberno_send                     NUMBER(10)     NOT NULL,
+    msg_no                            NUMBER(10)     NULL ,
+  FOREIGN KEY (memberno_send) REFERENCES member (memberno),
+  FOREIGN KEY (msg_no) REFERENCES message (msg_no)
+);
+
+COMMENT ON TABLE msgsend is '쪽지 송신 내역 테이블';
+COMMENT ON COLUMN msgsend.msend_no is '송신번호';
+COMMENT ON COLUMN msgsend.memberno_send is '송신자 번호';
+COMMENT ON COLUMN msgsend.msg_no is '쪽지 번호';
+
+
+/**********************************/
+/* Table Name: 쪽지 수신 내역 테이블 */
+/**********************************/
+CREATE TABLE msgrecv(
+    mrecv_no                          NUMBER(10)     NOT NULL    PRIMARY KEY,
+    memberno_recv                     NUMBER(10)     NOT NULL,
+    msg_no                            NUMBER(10)     NULL ,
+  FOREIGN KEY (memberno_recv) REFERENCES member (memberno),
+  FOREIGN KEY (msg_no) REFERENCES message (msg_no)
+);
+
+COMMENT ON TABLE msgrecv is '쪽지 수신 내역 테이블';
+COMMENT ON COLUMN msgrecv.mrecv_no is '수신번호';
+COMMENT ON COLUMN msgrecv.memberno_recv is '수신자 번호';
+COMMENT ON COLUMN msgrecv.msg_no is '쪽지 번호';
+
+
+/**********************************/
+/* Table Name: 쪽지보관함 */
+/**********************************/ 
+CREATE TABLE msg_repo(
+    msg_repono                        NUMBER(10)     NOT NULL    PRIMARY KEY,
+    memberno                          NUMBER(10)     NOT NULL,
+    msg_no                            NUMBER(10)     NULL ,
+  FOREIGN KEY (msg_no) REFERENCES message (msg_no),
+  FOREIGN KEY (memberno) REFERENCES member (memberno)
+);
+
+COMMENT ON TABLE msg_repo is '쪽지보관함';
+COMMENT ON COLUMN msg_repo.msg_repono is '쪽지보관번호';
+COMMENT ON COLUMN msg_repo.memberno is '회원번호';
+COMMENT ON COLUMN msg_repo.msg_no is '쪽지 번호';
+
+
+/* [시나리오]
+ * 받은 쪽지 or 보낸 쪽지를 보관함에 저장하는 기능
+ * 
+ * 1. [보관하기 버튼 클릭] -> read상태에서는 msg_no, memberno(현재 회원 번호)-세션을 모두 사용가능.
+ * 2. AJAX 호출시 msg_no를 넘긴다.
+ * 3. Controller에서 msg_no와 세션에 있는 memberno(현재 회원 번호)를 바탕으로 DB에 해당 번호들 저장
+ * 
+ * 
+ */
+
+
+
 

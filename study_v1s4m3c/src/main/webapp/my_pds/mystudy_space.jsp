@@ -4,10 +4,7 @@
 
 <% 
 String root = request.getContextPath();
-int stdlist_no=Integer.parseInt(request.getParameter("stdlist_no"));
-
-int cateno=Integer.parseInt(request.getParameter("cateno"));
-
+int stdlist_no=Integer.parseInt(request.getParameter("stdlist_no")); 
 %>
  
 <!DOCTYPE html>
@@ -31,15 +28,17 @@ int cateno=Integer.parseInt(request.getParameter("cateno"));
  
 $(document).ready(function(){
   
+  var cateno=$.cookie('cateno');
+  
   if($.cookie('nowpage')=='' && $.cookie('nowpage2')=='' && $.cookie('nowpage3')==''){
-    set_nowpage_cookie(<%=cateno%>, <%=stdlist_no%>, 1);  // 최초 홈페이지 실행시 동작
+    set_nowpage_cookie(cateno, <%=stdlist_no%>, 1);  // 최초 홈페이지 실행시 동작
   }else{
-    if(<%=cateno%>==2){
-      set_nowpage_cookie(<%=cateno%>, <%=stdlist_no%>, $.cookie('nowpage'));
-    }else if(<%=cateno%>==3){
-      set_nowpage_cookie(<%=cateno%>, <%=stdlist_no%>, $.cookie('nowpage2'));
+    if(cateno==2){
+      set_nowpage_cookie(cateno, <%=stdlist_no%>, $.cookie('nowpage'));
+    }else if(cateno==3){
+      set_nowpage_cookie(cateno, <%=stdlist_no%>, $.cookie('nowpage2'));
     }else{
-      set_nowpage_cookie(<%=cateno%>, <%=stdlist_no%>, $.cookie('nowpage3'));
+      set_nowpage_cookie(cateno, <%=stdlist_no%>, $.cookie('nowpage3'));
     }
   }
   
@@ -54,13 +53,13 @@ $(document).ready(function(){
     var id=$(this).attr('id');
     $("#tab_div").children().filter("#"+id).addClass("active");
     $("#tab_div").children().filter("#"+id).siblings().removeClass("active");
-     
+    
   });
   
   /*탭 메뉴 포커스를 cateno를 통해 유지한다. */
-  $("#tabs > #li_tab<%=cateno%>").addClass("active");
-  $("#tabs > #li_tab<%=cateno%> > a").css("background-color", "#ffc107");
-  $("#tab_div > #tab<%=cateno%>").addClass("active");
+  $("#tabs > #li_tab"+cateno).addClass("active");
+  $("#tabs > #li_tab"+cateno+" > a").css("background-color", "#ffc107");
+  $("#tab_div > #tab"+cateno).addClass("active");
   
 });
 
@@ -88,9 +87,8 @@ function dropdown(pdsno, event){
   
   //console.log(pdsno); 
     
-  $('#dropdown'+pdsno).toggleClass('open');
-  
-  /* dropdown_menu.css("z-index", "1050"); */ 
+  //$('#dropdown'+pdsno).toggleClass('open'); --> 오히려 이 구문이 open의 추가를 막고 있었음. 
+   
   dropdown_menu.css("position","fixed"); 
   dropdown_menu.css("display", "");
   dropdown_menu.css("left", divLeft);  // x위치 + 80px (우로 이동)
@@ -145,6 +143,69 @@ function wait(){
   alert("개발중!");
 }
 
+/* 쪽지 폼 출력
+ * memberno_send : 보내는 사람 ID
+ * memberno_rev : 받는 사람 ID
+ */
+function message(memberno_send, memberno_recv){
+  var modal=$('#modal_common');
+  var message_form="";
+  
+  message_form+="<DIV>";
+  message_form+="  <label>제목</label>";
+  message_form+="  <input type='text' id='msg_title' name='msg_title' placeholder='제목'><br>";
+  message_form+="  <label>내용</label>"; 
+  message_form+="  <textarea style='resize:none; overflow:scroll; height:200px; width:99%;' id='msg_content' name='msg_content' placeholder='내용'></textarea><br>";
+  message_form+="  <DIV style='text-align:center;'><button type='submit' class='btn btn-info' onclick=tranfer_msn("+memberno_send+","+memberno_recv+");>전송</button>";
+  message_form+="  <button type='button' class='btn btn-danger' data-dismiss='modal'>취소</button></DIV>";
+  message_form+="</DIV>";
+    
+  $('#modal_title', modal).html("<img src='/study/my_pds/images/message.png'>[쪽지보내기]");
+  $('#modal-body', modal).html(message_form);
+  modal.modal();
+}
+
+/* 쪽지 AJAX 전송 처리  
+ * 전송 성공시 : result=1
+        실패시 : result=0
+ */
+function tranfer_msn(memberno_send, memberno_recv){
+  var modal=$('#modal_common');
+  var msg_title=$('#msg_title').val();
+  var msg_content= $('#msg_content').val(); 
+  
+  var param="memberno_send="+memberno_send+"&memberno_recv="+memberno_recv+"&msg_title="+msg_title+"&msg_content="+msg_content;
+   
+  if(msg_title==''){
+    alert('쪽지 제목을 입력하세요.');
+    return false;
+  }else if(msg_content==''){
+    alert('쪽지 내용을 입력하세요.');
+    return false;
+  }
+  
+  $.ajax({
+    url: "./msn.do",
+    type: "POST",      
+    cache: false,    // 일반적으로 false
+    dataType: "json", // or json
+    data: param,
+    success: function(data){
+      if(data.result=="OK"){  // 메세지 전송 성공
+        alert("쪽지 전송 완료!");
+        
+        modal.modal('hide'); // 모달창 닫기.
+        
+      }else{                // 메세지 전송 실패
+        alert("쪽지 전송에 실패했습니다.\n 다시 시도해주세요.\n 에러:"+data.result);
+      }
+    },
+    error: function (request, status, error){
+      
+    }
+  });
+}
+
 /* 검색 쿠키 초기화. */
 function reset(no, cateno, stdlist_no){
   console.log(cateno, stdlist_no);
@@ -155,6 +216,7 @@ function reset(no, cateno, stdlist_no){
 
 /* 페이징 notice 호출 경로 */
 function set_nowpage_cookie(cateno, stdlist_no, nowpage){
+  
   if(cateno==2){
     $.cookie('nowpage', nowpage, {path:'/'})
   }else if(cateno==3){
@@ -168,11 +230,12 @@ function set_nowpage_cookie(cateno, stdlist_no, nowpage){
 
 function notice(cateno, stdlist_no){  // 페이지을 위해 start_page, end_page를 추가할 예정.
   
+  $.cookie('cateno', cateno, {path:'/'});  // cateno 쿠키 설정
   var pdsword="";
   
   if(cateno==2){
     pdsword=$('#pdsword1').val();     // 검색창에 입력된 값을 가져옴.
-    if($('#pdsword1').val() == ''){   // 검색어가 없으면
+    if(pdsword == ''){                // 검색어가 없으면
       pdsword=$.cookie('pdsword1');   // 쿠키 값을 pdsword에 입력
       $('#pdsword1').val(pdsword);    // pdsword를 검색창에 입력
     }else{                            // 검색창에 검색어 있으면
@@ -246,21 +309,21 @@ function notice(cateno, stdlist_no){  // 페이지을 위해 start_page, end_pag
         for(var i=0; i<data.length-1; i++){ 
           value+="  <tr id='meminfo_tr'>";
           value+="    <td style='text-align: center;'>"+(i+1)+"</td>";
-          value+="    <td style='text-align: center;'><a data-pdsno='"+data[i].pdsno+"' class='title_content' onmouseover='hello(event);' href='./read.do?stdlist_no="+<%=stdlist_no%>+"&pdsno="+data[i].pdsno+"&cateno="+cateno+"'>"+data[i].pdstitle+"</a></td>";
+          value+="    <td style='text-align: center;'><a data-pdsno='"+data[i].pdsno+"' class='title_content' onmouseover='hello(event);' href='./read.do?stdlist_no="+<%=stdlist_no%>+"&pdsno="+data[i].pdsno+"'>"+data[i].pdstitle+"</a></td>";
           value+="    <td style='text-align: center;'>"+data[i].pdslike+"</td>";
           value+="    <td style='text-align: center;'>"+data[i].pdscnt+"</td>";
           
           /* 회원 버튼 클릭시 드롭다운 메뉴 */
           value+="    <td style='text-align: center;'>"; 
           value+="    <div id='dropdown"+data[i].pdsno+"' class='dropdown'>"; 
-          value+="      <button onclick='dropdown("+data[i].pdsno+", event);' class='btn btn-link' type='button' data-toggle='dropdown'>"+data[i].memname+"<span class='caret'></span></button>";
+          value+="      <button onclick='dropdown("+data[i].pdsno+", event);' class='btn btn-link' type='button' data-memberno='"+data[i].memberno+"' data-toggle='dropdown'>"+data[i].memid+"("+data[i].memname+")<span class='caret'></span></button>";
           value+="      <ul id='dropdown_menu"+data[i].pdsno+"' class='dropdown-menu'>";
           value+="      <li style='text-align:left;'><a onclick='javascript:wait();'><img src='/study/my_pds/images/mem_info.png'>회원정보</a></li>";
-          value+="      <li style='text-align:left;'><a onclick='javascript:wait();'><img src='/study/my_pds/images/message.png'>쪽지보내기</a></li>";
+          value+="      <li style='text-align:left;'><a onclick='javascript:message(1,"+data[i].memberno+");'><img src='/study/my_pds/images/message_add.png'>쪽지보내기</a></li>";
           value+="      <li style='text-align:left;'><a onclick='javascript:wait();'>그외 기능</a></li>"; 
           value+="      </ul>";
           value+="    </div>";
-          value+="    </td>"; 
+          value+="    </td>";
           
           value+="    <td style='text-align: center;'>"+data[i].pdsdate.substring(0,10)+"</td>";
           value+="    <td style='text-align: center;'>";
@@ -443,11 +506,12 @@ function send(){
         
         msg+="패스워드가 불일치 합니다."+"<br>";
         msg+="다시 확인 후 시도해주세요."+"<br>";
-        msg+="<button class='btn btn-link'><img src='/study/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br>";
+        msg+="<button class='btn btn-link'><img src='/study/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br><br><br>";
+        msg+="<DIV style='text-align:center;'><button type='button' class='btn btn-info' data-dismiss='modal'>확인</button></DIV>";
         $('#modal_title').html("<img src='/study/my_pds/images/warning.png'>패스워드 불일치");
-        $('#modal_content').html(msg);
-        $('#modal_pwcheck').modal();
-        
+        $('#modal-body').html(msg); 
+        $('#modal_common').modal();
+         
         $('#pdspasswd').val('');  /* 패스워드 값을 초기화하고 포커스를 준다. */
         $('#pdspasswd').focus();
       }
@@ -462,7 +526,7 @@ function send(){
       
       $('#modal_title').html("시스템 에러");
       $('#modal_content').html(msg);
-      $('#modal_pwcheck').modal();
+      $('#modal_common').modal();
     }
   });
   
@@ -485,7 +549,7 @@ function send(){
  
   <!-- 삭제 확인 Modal --> 
   <div class="modal fade" id="delete_Modal" role="dialog" style="display: none;">
-    <!-- 삭제 확인 Modal content--> 
+    <!-- 삭제 확인 Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -512,34 +576,28 @@ function send(){
     </div>
   </div>
   
-  <!-- 비밀번호 검사 결과 Modal -->
-  <div class="modal fade" id="modal_pwcheck" role="dialog" style="display: none;">
-    <!-- <div class="modal-dialog"> -->
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title text-error" id='modal_title'></h3>
-        </div>
-        <div class="modal-body"> 
-          <span id='modal_content' class="text-error" style="font-weight: bolder;"></span>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info" data-dismiss="modal">확인</button>
-        </div>
+  <!-- 공통 모달창  -->
+  <div class="modal fade" id="modal_common" role="dialog" style="display: none;">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title text-error" id='modal_title'></h3>
       </div>
-    <!-- </div> -->
+      <div class="modal-body" id="modal-body">
+      </div>
+    </div>
   </div>
   <!-- 비밀번호 검사 결과 Modal END -->
-
+ 
   <DIV>
     <button class="btn btn-success" style="float: left; margin-top: 10px;" onclick="location.href='/study/mystudy/mystudy.do'"><i class="icon-left-open"></i>스터디 목록</button>
-    <h3 style="float: right"><img src="/study/my_pds/images/pencile.png">스터디 공간</h3>
+    <h3 style="text-align: right;"><img src="/study/my_pds/images/pencile.png">스터디 공간</h3>
     <hr style="color: #000000; border: solid 2px #000000; clear: both;">
   </DIV>
 
   <!-- 팝 오버 -->
-  <a href="#" data-toggle="popover" title="안녕하세요 여러분!" data-content="저희 스터디에 오신 것을 환영 합니다.">스터디장의 인삿말</a>
+  <!-- <a href="#" data-toggle="popover" title="안녕하세요 여러분!" data-content="저희 스터디에 오신 것을 환영 합니다.">스터디장의 인삿말</a> -->
 
 
     <div class="tabbable"> <!-- 왼쪽과 오른쪽 탭에만 필요 -->
@@ -571,16 +629,15 @@ function send(){
             <div class="btn-group">
               <select>
                 <option>키워드</option>
-                <option>제목</option>
-                <option>작성자</option>
               </select>
             </div>
             <input style="margin-bottom: 0px; width: 30%;" type="text" id="pdsword1" name="pdsword1" placeholder="검색어 입력" required="required">
             <button class="btn btn-success" type="button" onclick="set_nowpage_cookie(2, ${param.stdlist_no}, 1)">검색</button>
-            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=2'"><img src='/study/my_pds/images/add_content.png'>등록</button>
+            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}'"><img src='/study/my_pds/images/add_content.png'>등록</button>
           </div>
         </ASIDE>
-        <DIV id="table_space_1"></DIV>
+        <DIV id="table_space_1">
+        </DIV>
       </div>
       <!-- ======공지사항 탭 종료 ====== -->
       
@@ -595,17 +652,18 @@ function send(){
             <div class="btn-group">
               <select>
                 <option>키워드</option>
-                <option>제목</option>
-                <option>작성자</option>
+                <!-- <option>제목</option>
+                <option>작성자</option> --> 
               </select> 
-            </div> 
+            </div>  
             
             <input style="margin-bottom: 0px; width: 30%;" type="text" id="pdsword2" name="pdsword2" placeholder="검색어 입력" required="required">
             <button class="btn btn-success" type="button" onclick="notice(3,${param.stdlist_no} )">검색</button>
-            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=3'"><img src='/study/my_pds/images/add_content.png'>등록</button>
+            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=${cookie.cateno.value }'"><img src='/study/my_pds/images/add_content.png'>등록</button>
           </div> 
         </ASIDE>
-        <DIV id="table_space_2"></DIV>
+        <DIV id="table_space_2">
+        </DIV>
       </div>
       <!-- ====== 자유게시판 탭 종료 =====-->
       
@@ -626,10 +684,11 @@ function send(){
             </div>
             <input style="margin-bottom: 0px; width: 30%;" type="text" id="pdsword3" name="pdsword3" placeholder="검색어 입력" required="required">
             <button class="btn btn-success" type="button" onclick="notice(4,${param.stdlist_no} )">검색</button>
-            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=4'"><img src='/study/my_pds/images/add_content.png'>등록</button>
+            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=${cookie.cateno.value }'"><img src='/study/my_pds/images/add_content.png'>등록</button>
           </div>
         </ASIDE>
-        <DIV id="table_space_3"></DIV>
+        <DIV id="table_space_3">
+        </DIV>
       </div>
       <!-- ====== 자료실 탭 종료 ===== -->
     </div>

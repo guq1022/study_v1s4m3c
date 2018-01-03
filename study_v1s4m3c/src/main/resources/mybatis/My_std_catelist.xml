@@ -14,5 +14,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM "STUDY"."MY_STD_CATELIST"
     WHERE STDLIST_NO=#{stdlist_no}
   </delete>
-  
+    
 </mapper>

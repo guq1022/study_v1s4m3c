@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <choose>
         <when test="pdsword == null or pdsword == ''"> <!-- 검색하지 않는 경우 -->
           WHERE mylistno=#{mylistno}
-        </when> 
+        </when>
         <otherwise>
           WHERE mylistno=#{mylistno} AND pdsword LIKE '%' || #{pdsword} || '%'  
         </otherwise>

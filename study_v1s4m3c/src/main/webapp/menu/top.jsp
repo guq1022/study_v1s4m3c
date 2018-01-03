@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
 String root = request.getContextPath();
@@ -8,9 +9,9 @@ String root = request.getContextPath();
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Study Matching Web Site</title>
+<title>Study Matching Web Site</title> 
 <!-------------------------- CSS Part -------------------------->
-<link rel="stylesheet" type="text/css" href="<%=root%>/menu/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="<%=root%>/menu/css/bootstrap.css" /> 
 <link rel="stylesheet" type="text/css" href="<%=root%>/menu/css/bootstrap-responsive.css" />
 <link rel="stylesheet" type="text/css" href="<%=root%>/menu/css/style.css" />
 <link rel="stylesheet" type="text/css" href="<%=root%>/menu/css/animate.css" />
@@ -25,15 +26,28 @@ String root = request.getContextPath();
 
 <!---------------------상단 Aside 메뉴 시작-------------------------->
   <div style="text-align: right; margin: 10px; color: #333333; font-size: 15px;">
-    <a href="#">회원가입</a>
-    <a href="#">로그인</a>
-    <a href="#">[로그아웃]</a>
-    <span style="font-weight: bold;"> 홍길동 님의
-    <a href="#">My Page</a></span>
+    <c:choose>
+      <c:when test="${sessionScope.memid == null}">
+        <a href="<%=root%>/login/login.do">로그인</a>
+        <span style='margin:5px;'>|</span>
+        <a href="<%=root%>/login/memberjoin.do">회원가입</a>    
+           
+      </c:when>
+      <c:otherwise>
+        <a href="<%=root%>/login/logout.do">로그아웃  </a>
+        <span style='margin:5px;'>|</span>
+        <span style="font-weight: bold;">${sessionScope.memid } 님의
+        <a href="<%=root%>/member/mypage.do">My Page</a></span>     
+      </c:otherwise>
+    </c:choose>
+        <span style='margin:5px;'>|</span>
+        <a href="<%=root%>/admin/admin/admin_create.do">관리자가입</a> 
+        <span style='margin:5px;'>|</span>  
+        <a href='${pageContext.request.contextPath }/user/message/message_home.do'><img src='<%=root%>/menu/images/message.png'>[쪽지함]</a>
   </div>
   <!--------------------------상단 Aside 메뉴 시작-------------------------->
 
-  <div class="navbar" style="width: 100%;">
+  <div class="navbar" style="width: 100%; position: relative;">
     <div class="navbar-inner">
       <div class="container">
       
@@ -98,8 +112,9 @@ String root = request.getContextPath();
               <ul class="dropdown-menu">
                 <li><a href="#">카테고리</a></li>
                 <li><a href="#">회원 관리</a></li>
-                <li><a href="#">관리자 관리</a></li>
-              </ul>
+                <li><a href="#">관리자 관리</a></li> 
+                <li><a href="${pageContext.request.contextPath }/admin/message/message_admin.do">쪽지함 관리</a></li>
+              </ul> 
             </li>
             
           </ul>
