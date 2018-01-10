@@ -30,7 +30,7 @@
   <property name="dataSource" ref="dataSource"/>
   <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
   <property value="dev.mvc.studylist,
-                   dev.mvc.recruit,
+                   dev.mvc.recruit, 
                    dev.mvc.reply,
                    dev.mvc.member, 
                    dev.mvc.mystudy,
@@ -41,6 +41,7 @@
   <!-- 매핑될 xml파일의 위치 정보를 저장한다. -->
   <property value="classpath:mybatis/*.xml" name="mapperLocations"/>
 </bean>
+
 <!-- Spring이 Mybatis를 사용할때 호출하는 객체 -->
 
   <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">

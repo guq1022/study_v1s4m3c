@@ -645,7 +645,7 @@ public class MessageProc implements MessageProcInter{
     str.append("<DIV id='paging'>");
     int _nowPage = (nowGrp-1) * PAGE_PER_BLOCK; // 이전 페이지로 이동
     if (nowGrp >= 2){
-      str.append("<span class='span_box_1'><A href='./message_admin.do?page_num="+page_num+"&nowPage="+_nowPage+"&first_day="+first_day+"&second_day="+second_day+"&search_condition="+search_condition+"&msgword="+msgword+"'>이전</A></span>");
+      str.append("<span class='span_box_1'><A onclick='javascript:msg_admin_list("+_nowPage+");'>이전</A></span>"); 
     }
     
     System.out.println(" ==>페이징 테스트:"+startPage);
@@ -661,14 +661,14 @@ public class MessageProc implements MessageProcInter{
         str.append("<span id='nowpage_value' class='span_box_2' data-nowpage="+i+">"+i+"</span>"); // 현재 페이지, 강조
       }else{ 
         // 현재 페이지가 아닌 페이지
-        str.append("<span class='span_box_1' data-nowpage="+i+"><A href='./message_admin.do?page_num="+page_num+"&nowPage="+i+"&first_day="+first_day+"&second_day="+second_day+"&search_condition="+search_condition+"&msgword="+msgword+"'>"+i+"</A></span>");
+        str.append("<span class='span_box_1' data-nowpage="+i+"><A onclick='javascript:msg_admin_list("+i+");'>"+i+"</A></span>"); 
       } 
     } 
     
     
     _nowPage = (nowGrp * PAGE_PER_BLOCK)+1; // 10개 다음 페이지로 이동  
-    if (nowGrp < totalGrp){ 
-      str.append("<span class='span_box_1'><A href='./message_admin.do?page_num="+page_num+"&nowPage="+_nowPage+"&first_day="+first_day+"&second_day="+second_day+"&search_condition="+search_condition+"&msgword="+msgword+"'>다음</A></span>");
+    if (nowGrp < totalGrp){
+      str.append("<span class='span_box_1'><A onclick='javascript:msg_admin_list("+_nowPage+");' >다음</A></span>");
     } 
     str.append("</DIV>"); 
     

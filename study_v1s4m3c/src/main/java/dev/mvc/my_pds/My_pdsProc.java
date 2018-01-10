@@ -114,7 +114,7 @@ public class My_pdsProc implements My_pdsProcInter{
     if (nowGrp >= 2){
       str.append("<span class='span_box_1'><A href=''>이전</A></span>");
     }
-    str.append("<span class='span_box_1'><A onclick='javascript:set_nowpage_cookie("+cateno+","+stdlist_no+","+startPage+");'>[<<]</A></span>");
+    str.append("<span class='span_box_1'><A onclick='javascript:set_nowpage_cookie("+cateno+","+stdlist_no+","+startPage+");'><<</A></span>");
     for(int i=startPage; i<=endPage; i++){ 
       if (i > totalPage){ 
         break;  
@@ -127,11 +127,11 @@ public class My_pdsProc implements My_pdsProcInter{
         str.append("<span class='span_box_1' id='cate_page"+i+"' data-nowpage="+i+"><A onclick='javascript:set_nowpage_cookie("+cateno+","+stdlist_no+","+i+");'>"+i+"</A></span>");   
       } 
     } 
-    str.append("<span class='span_box_1'><A onclick='javascript:set_nowpage_cookie("+cateno+","+stdlist_no+","+totalPage+");'>[>>]</A></span>");
+    str.append("<span class='span_box_1'><A onclick='javascript:set_nowpage_cookie("+cateno+","+stdlist_no+","+totalPage+");'>>></A></span>");
     _nowPage = (nowGrp * PAGE_PER_BLOCK)+1; // 10개 다음 페이지로 이동 
     if (nowGrp < totalGrp){ 
       str.append("<span class='span_box_1'><A href=''>다음</A></span>");
-    } 
+    }  
     str.append("</DIV>"); 
      
     return str.toString(); 

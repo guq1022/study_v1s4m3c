@@ -1,5 +1,6 @@
 package dev.mvc.recruit;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -47,4 +48,9 @@ public class RecruitDAO implements RecruitDAOInter{
     return mybatis.update("recruit.confirm_Y", memberno);
   }
 
+  @Override
+  public String check_leader(HashMap<String, Object> hashMap) {
+    return mybatis.selectOne("recruit.check_leader", hashMap);
+  }
+  
 }

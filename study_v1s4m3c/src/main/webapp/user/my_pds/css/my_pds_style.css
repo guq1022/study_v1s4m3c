@@ -5,10 +5,11 @@
 } 
 
 .content{
-  width: 90%;
+  width: 95%;
   margin: 0px auto;
   margin-bottom: 50px;
-}
+  margin-top: -15px; 
+} 
 
 .pagination a {
     color: black;
@@ -116,7 +117,7 @@ i{
 }
 
 .msg_menu{
-  cursor: pointer;
+  cursor: pointer; 
 }
 
 .msg_menu:hover{
@@ -136,4 +137,10 @@ i{
     color: #FFFFFF;
     z-index:1000;
     
-  }
+}
+ 
+thead{
+  font-size: 12px;
+  color:#000000;
+  background-color: #2d2d30;
+}

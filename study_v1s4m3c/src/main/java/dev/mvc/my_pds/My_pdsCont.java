@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +50,7 @@ import dev.mvc.memsearch.MemsearchProcInter;
 import dev.mvc.memsearch.MemsearchVO;
 import dev.mvc.message.MessageProcInter; 
 import dev.mvc.my_std_catelist.My_std_catelistVO;
-
+import dev.mvc.recruit.RecruitProcInter;
 import nation.web.tool.Tool;
 import nation.web.tool.Upload;
 
@@ -62,27 +64,42 @@ public class My_pdsCont {
   private My_pdsProcInter my_pdsProc;
   
   @Autowired
-  @Qualifier("dev.mvc.memsearch.MemsearchProc")
+  @Qualifier("dev.mvc.memsearch.MemsearchProc") 
   private MemsearchProcInter memsearchProc;
   
   @Autowired
   @Qualifier("dev.mvc.message.MessageProc")
-  private MessageProcInter messageProc;
+  private MessageProcInter messageProc; 
   
-  @RequestMapping(value="/mystudy/mystudy_space.do", method=RequestMethod.GET)
-  public ModelAndView myStudy_space(){
+  @Autowired 
+  @Qualifier("dev.mvc.recruit.RecruitProc")
+  private RecruitProcInter recruitProc;
+  
+  @RequestMapping(value="/user/mystudy/mystudy_space.do", method=RequestMethod.GET)
+  public ModelAndView myStudy_space(
+      HttpServletRequest request,
+      @RequestParam(value="stdlist_no") int stdlist_no
+      ){
     
-    /*
-     * 근데, cateno도 생각해보면 ajax의 parameter로 전달 되기에 고정된 값과 마찬가지.
-     * stdlist_no도 고정.
-     * 
-     * 그러면 아래에서 mylistno를 조회하는 process는 굳이 hashMap을 사용할 필요가 없음.
-     * 
-     * mybatis에서 selectList()가 아닌 selectOne()을 사용해도 가능함.
-     */
+    // stdlist_no, memberno -> std_auth 검사
+    HttpSession session=request.getSession(false);
+    int memberno=(Integer)session.getAttribute("memberno");
+    
+    HashMap<String, Object> hashMap=new HashMap<String, Object>();
+    hashMap.put("stdlist_no", stdlist_no);
+    hashMap.put("memberno", memberno);
+     
+    String std_auth=recruitProc.check_leader(hashMap);
+    
+    System.out.println("현재 접속한 회원의 std_auth:"+std_auth);
+    
+    session.setAttribute("std_auth", std_auth);
+    
     System.out.println(" --> myStudy_space 호출");
     ModelAndView mav=new ModelAndView();
-    mav.setViewName("/my_pds/mystudy_space");
+    
+    mav.addObject("std_auth", std_auth); 
+    mav.setViewName("/user/my_pds/mystudy_space");
     
     return mav;
   }
@@ -95,7 +112,7 @@ public class My_pdsCont {
    * @return
    */
   @ResponseBody
-  @RequestMapping(value="/mystudy/pds_notice.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
+  @RequestMapping(value="/user/mystudy/pds_notice.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
   public String pds_notice(int cateno, int stdlist_no, String pdsword, int nowpage){
     System.out.println(" --> pds_notice 호출 (글 목록 출력 AJAX)");
     // mylistno를 먼저 조회해야함. -> stdlist_no, cateno 필요함.
@@ -155,12 +172,16 @@ public class My_pdsCont {
    * @param stdlist_no
    * @param cateno
    * @return
-   */
-  @RequestMapping(value="/mystudy/create.do", method=RequestMethod.GET)
-  public ModelAndView mypds_create(int stdlist_no){
+   */ 
+  @RequestMapping(value="/user/mystudy/create.do", method=RequestMethod.GET)
+  public ModelAndView mypds_create(HttpServletRequest request,int stdlist_no){
     System.out.println(" --> mypds_create [GET]호출");
     ModelAndView mav=new ModelAndView();
-    mav.setViewName("/my_pds/my_pds_create");
+    
+    HttpSession session=request.getSession(false);
+    int memberno=(Integer)session.getAttribute("memberno");
+    
+    mav.setViewName("/user/my_pds/my_pds_create");
     
     // mylistno를 넘겨줘야함.
     // mylistno를 먼저 조회해야함. -> stdlist_no, cateno 필요함.
@@ -186,13 +207,13 @@ public class My_pdsCont {
    * @param request  - 해당 jsp의 request 객체
    * @param stdlist_no - 돌아갈 위치
    * @param cateno   - 돌아갈 위치
-   * @return
+   * @return 
    */
-  @RequestMapping(value="/mystudy/create.do", method=RequestMethod.POST)
+  @RequestMapping(value="/user/mystudy/create.do", method=RequestMethod.POST)
   public ModelAndView mypds_create(My_pdsVO my_pdsVO, HttpServletRequest request, int stdlist_no, int cateno){
     System.out.println(" --> mypds_create [POST]호출");
     ModelAndView mav=new ModelAndView();
-    mav.setViewName("/my_pds/message");
+    mav.setViewName("/user/my_pds/message"); 
     
     // mylistno 구하기
     HashMap<String, Integer> hm_mylistno =new HashMap<String, Integer>();
@@ -235,10 +256,12 @@ public class My_pdsCont {
     if(count==1){ // 등록 성공
       result_msg.add("글 등록에 성공하였습니다.");
       result_link.add("<button type='button' class='btn btn-info' onclick=\"location.href='./read.do?stdlist_no="+stdlist_no+"&pdsno="+lastest_pdsno+"'\">등록 확인</button>");
+      // redirect()
     }else{ // 등록 실패
       result_msg.add("글 등록에 실패하였습니다.");
       result_msg.add("관리자에게 문의해주세요.");
       result_link.add("<button type='button' class='btn btn-warning' onclick=\"history.back()\">다시 시도</button>");
+      //
     }
     result_link.add("<button type='button' class='btn btn-info' onclick=\"location.href='./mystudy_space.do?stdlist_no="+stdlist_no+"'\">글 목록 가기</button>");
     
@@ -253,10 +276,10 @@ public class My_pdsCont {
    * @param pdsno
    * @return
    */
-  @RequestMapping(value="/mystudy/read.do", method=RequestMethod.GET)
+  @RequestMapping(value="/user/mystudy/read.do", method=RequestMethod.GET)
   public ModelAndView read(int pdsno){
-    ModelAndView mav=new ModelAndView();
-    mav.setViewName("/my_pds/my_pds_read");
+    ModelAndView mav=new ModelAndView(); 
+    mav.setViewName("/user/my_pds/my_pds_read");
     
     My_pdsVO read=my_pdsProc.read(pdsno);
     
@@ -279,10 +302,10 @@ public class My_pdsCont {
    * @param pdsno
    * @return
    */
-  @RequestMapping(value="/mystudy/update.do", method=RequestMethod.GET)
+  @RequestMapping(value="/user/mystudy/update.do", method=RequestMethod.GET)
   public ModelAndView update(int pdsno){
-    ModelAndView mav=new ModelAndView();
-    mav.setViewName("/my_pds/my_pds_update");
+    ModelAndView mav=new ModelAndView(); 
+    mav.setViewName("/user/my_pds/my_pds_update");
     
     My_pdsVO read=my_pdsProc.read(pdsno);
     
@@ -302,11 +325,11 @@ public class My_pdsCont {
    * @param mylistno
    * @return
    */
-  @RequestMapping(value="/mystudy/update.do", method=RequestMethod.POST)
+  @RequestMapping(value="/user/mystudy/update.do", method=RequestMethod.POST)
   public ModelAndView update(My_pdsVO my_pdsVO, HttpServletRequest request, int mylistno){
     System.out.println(" --> update() POST 호출 ");
     ModelAndView mav=new ModelAndView();
-    mav.setViewName("/my_pds/message");
+    mav.setViewName("/user/my_pds/message"); 
     
     // ---------------------------------------------------------------------------
     // 파일 전송
@@ -390,7 +413,7 @@ public class My_pdsCont {
    * @return
    */
   @ResponseBody
-  @RequestMapping(value="/mystudy/check_pdspasswd.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
+  @RequestMapping(value="/user/mystudy/check_pdspasswd.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
   public String check_pdspasswd(int pdsno, String pdspasswd){
     System.out.println(" --> check_pdspasswd 호출 ");
     HashMap<String, Object> hashMap=new HashMap<String, Object>();
@@ -403,7 +426,7 @@ public class My_pdsCont {
     
     JSONObject obj=new JSONObject();
     
-    obj.put("passwd_check", passwd_check);
+    obj.put("passwd_check", passwd_check); 
     
     return obj.toJSONString();
   }
@@ -414,11 +437,11 @@ public class My_pdsCont {
    * @param pdsno
    * @return
    */
-  @RequestMapping(value="/mystudy/delete.do", method=RequestMethod.POST)
+  @RequestMapping(value="/user/mystudy/delete.do", method=RequestMethod.POST)
   public ModelAndView delete(My_pdsVO my_pdsVO, int pdsno, int stdlist_no, int cateno){
     System.out.println(" --> delete() POST 호출 ");
     ModelAndView mav=new ModelAndView();
-    mav.setViewName("/my_pds/message");
+    mav.setViewName("/user/my_pds/message"); 
     
     ArrayList<String> result_msg=new ArrayList<String>();
     ArrayList<String> result_link=new ArrayList<String>();
@@ -448,7 +471,7 @@ public class My_pdsCont {
    * @return 성공여부
    */
  @ResponseBody
- @RequestMapping(value="/mystudy/like.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
+ @RequestMapping(value="/user/mystudy/like.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
  public String like(int pdsno){
    JSONObject obj=new JSONObject();
    int like_count=my_pdsProc.inc_like(pdsno);
@@ -459,7 +482,7 @@ public class My_pdsCont {
  // 파일 삭제 AJAX - [수정]에서 파일을 삭제하는 경우에 사용.
  // 새로운 mybatis를 생성하여 구성함.
  @ResponseBody
- @RequestMapping(value="/mystudy/del_file.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
+ @RequestMapping(value="/user/mystudy/del_file.do", method=RequestMethod.GET, produces="text/plain; charset=utf-8")
  public String del_file(int pdsno, String filename, String thumb, HttpServletRequest request){
    String upDir = Tool.getRealPath(request, "/my_pds/storage");
    
@@ -492,20 +515,12 @@ public class My_pdsCont {
    return obj.toJSONString();
  }
  
- // 웹 소켓 테스트
- @RequestMapping(value="/websocket/test.do" , method=RequestMethod.GET)
- public ModelAndView test(){
-   ModelAndView mav=new ModelAndView();
-   mav.setViewName("/websocket/test");
-   return mav;
- }
- 
  /**
   * 회원 정보를 눌러서 쪽지를 바로 보낼때.
   * @return
   */
- @ResponseBody
- @RequestMapping(value="/mystudy/msn.do", method=RequestMethod.POST, produces="text/plain; charset=utf-8")
+ @ResponseBody 
+ @RequestMapping(value="/user/mystudy/msn.do", method=RequestMethod.POST, produces="text/plain; charset=utf-8")
  public String direct_msn(int memberno_send, int memberno_recv, String msg_title, String msg_content){
    
    int msg_count=0; // 쪽지 DB 처리 결과 변수
@@ -523,7 +538,7 @@ public class My_pdsCont {
    int confirm_recv=messageProc.member_count(memberno_recv);  // 수신자 회원 번호 유효 검사
    
    if(confirm_send==1 && confirm_recv==1){
-     // 전달받은 parameter로 쪽지를 DB에 저장.
+     // 전달받은 parameter로 쪽지를 DB에 저장. 
      msg_count=messageProc.msg_create(memberno_send, memberno_recv, msg_title, msg_content);
      
      int msg_no=messageProc.serach_last_msg_no();  // 방금 저장된 쪽지 번호 
@@ -539,7 +554,7 @@ public class My_pdsCont {
    
    }else if(confirm_send!=1){
      result="no_sender";
-   }else if(confirm_recv!=1){
+   }else if(confirm_recv!=1){ 
      result="no_receiver";
    }
    

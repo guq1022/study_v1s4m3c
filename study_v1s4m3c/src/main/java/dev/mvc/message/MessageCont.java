@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -155,7 +156,7 @@ public class MessageCont {
       search_condition="none";
       msgword="none"; 
     }
-     
+    
     // JSP에서 넘어온 memberno 세션을 사용 -> 현재 사용자의 회원 번호
     int memberno=(Integer)session.getAttribute("memberno");
     
@@ -516,7 +517,7 @@ public class MessageCont {
  }
  
  /**
-  * 쪽지 보관함 리스트 출력
+  * 쪽지 보관함 이동
   * @param request
   * @param param_data
   * @param index

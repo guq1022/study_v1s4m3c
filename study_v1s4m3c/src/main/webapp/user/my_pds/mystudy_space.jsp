@@ -20,11 +20,11 @@ int stdlist_no=Integer.parseInt(request.getParameter("stdlist_no"));
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<script type="text/javascript" src="../js/jquery.cookie.js"></script>  <!-- jQuery를 통한 쿠키 관리 -->
+<script type="text/javascript" src="../../js/jquery.cookie.js"></script>  <!-- jQuery를 통한 쿠키 관리 -->
 
-<link href="/study/my_pds/css/my_pds_style.css" rel='Stylesheet' type='text/css'>
-
-<script type="text/javascript">
+<link href="/study/user/my_pds/css/my_pds_style.css" rel='Stylesheet' type='text/css'>
+ 
+<script type="text/javascript"> 
  
 $(document).ready(function(){
   
@@ -231,7 +231,7 @@ function set_nowpage_cookie(cateno, stdlist_no, nowpage){
 function notice(cateno, stdlist_no){  // 페이지을 위해 start_page, end_page를 추가할 예정.
   
   $.cookie('cateno', cateno, {path:'/'});  // cateno 쿠키 설정
-  var pdsword="";
+  var pdsword=""; 
   
   if(cateno==2){
     pdsword=$('#pdsword1').val();     // 검색창에 입력된 값을 가져옴.
@@ -264,10 +264,10 @@ function notice(cateno, stdlist_no){  // 페이지을 위해 start_page, end_pag
   
   // 페이지 정보 가져오기
   $('.span_box1').click(function(){
-    nowpage=$(this).attr('[data-nowpage]');
+    nowpage=$(this).attr('[data-nowpage]'); 
   });
   
-  $.ajax({
+  $.ajax({ 
     url: "./pds_notice.do",
     type: "GET",      
     cache: false,    // 일반적으로 false
@@ -291,18 +291,18 @@ function notice(cateno, stdlist_no){  // 페이지을 위해 start_page, end_pag
       value+="    <col style='width: 10%;'/>";
       value+="    <col style='width: 10%;'/>";
       value+="    <col style='width: 10%;'/>";
-      value+="  </colgroup> ";
+      value+="  </colgroup> "; 
       
-      value+="  <thead>";
-      value+="    <TR class='label-success'>";
+      value+="  <thead style='color:white;'>";
+      value+="    <TR class='label-success' style='background-color: #2d2d30;'>";
       value+="    <TH style='text-align: center ;'>번호</TH>";
-      value+="    <TH style='text-align: center ;'><img src='/study/my_pds/images/title.png'>제목</TH>";
-      value+="    <TH style='text-align: center ;'><img src='/study/my_pds/images/like_after.png'>글 추천수</TH>";
-      value+="    <TH style='text-align: center ;'><img src='/study/my_pds/images/cnt.png'>글 조회수</TH>";
-      value+="    <TH style='text-align: center ;'><img src='/study/my_pds/images/member2.png'>작성자</TH>";
-      value+="    <TH style='text-align: center ;'><img src='/study/my_pds/images/time.png'>작성일</TH>";
-      value+="    <TH style='text-align: center ;'><img src='/study/my_pds/images/tool.png'>기타</TH>";
-      value+="  </TR>";
+      value+="    <TH style='text-align: center ;'><img src='/study/user/my_pds/images/title.png'>제목</TH>";
+      value+="    <TH style='text-align: center ;'><img style='width:15%;' src='/study/user/my_pds/images/like_after.png'>글 추천수</TH>";
+      value+="    <TH style='text-align: center ;'><img src='/study/user/my_pds/images/cnt.png'>글 조회수</TH>";
+      value+="    <TH style='text-align: center ;'><img src='/study/user/my_pds/images/member2.png'>작성자</TH>";
+      value+="    <TH style='text-align: center ;'><img src='/study/user/my_pds/images/time.png'>작성일</TH>";
+      value+="    <TH style='text-align: center ;'><img style='width:15%;' src='/study/user/my_pds/images/tool.png'>관리</TH>";
+      value+="  </TR>";   
       value+="</thead>";
       value+="  <tbody id='meminfo_tbody'>";
       if(data.length>1){
@@ -318,22 +318,29 @@ function notice(cateno, stdlist_no){  // 페이지을 위해 start_page, end_pag
           value+="    <div id='dropdown"+data[i].pdsno+"' class='dropdown'>"; 
           value+="      <button onclick='dropdown("+data[i].pdsno+", event);' class='btn btn-link' type='button' data-memberno='"+data[i].memberno+"' data-toggle='dropdown'>"+data[i].memid+"("+data[i].memname+")<span class='caret'></span></button>";
           value+="      <ul id='dropdown_menu"+data[i].pdsno+"' class='dropdown-menu'>";
-          value+="      <li style='text-align:left;'><a onclick='javascript:wait();'><img src='/study/my_pds/images/mem_info.png'>회원정보</a></li>";
-          value+="      <li style='text-align:left;'><a onclick='javascript:message(1,"+data[i].memberno+");'><img src='/study/my_pds/images/message_add.png'>쪽지보내기</a></li>";
-          value+="      <li style='text-align:left;'><a onclick='javascript:wait();'>그외 기능</a></li>"; 
-          value+="      </ul>";
+          value+="      <li style='text-align:left;'><a onclick='javascript:wait();'><img src='/study/user/my_pds/images/mem_info.png'>회원정보</a></li>";
+          value+="      <li style='text-align:left;'><a onclick='javascript:message(1,"+data[i].memberno+");'><img src='/study/user/my_pds/images/message_add.png'>쪽지보내기</a></li>";
+          //value+="      <li style='text-align:left;'><a onclick='javascript:wait();'>그외 기능</a></li>"; 
+          value+="      </ul>"; 
           value+="    </div>";
           value+="    </td>";
           
           value+="    <td style='text-align: center;'>"+data[i].pdsdate.substring(0,10)+"</td>";
           value+="    <td style='text-align: center;'>";
 
-          value+="<button class='btn btn-link' onclick=\"location.href='./update.do?stdlist_no="+data[i].stdlist_no+"&pdsno="+data[i].pdsno+"&cateno="+data[i].cateno+"'\">";
-          value+="<img src='/study/my_pds/images/update.png' title='수정'></button>";
-          value+="<button class='btn btn-link' onclick='javascript:deletePds("+data[i].stdlist_no+","+data[i].pdsno+","+data[i].cateno+")'>";
-          value+="<img src='/study/my_pds/images/delete.png' title='삭제'></button>";
-          value+="";
-          value+="";
+          if(("${sessionScope.memberno}"==data[i].memberno) && cateno!=2){
+            value+="<button class='btn btn-link' onclick=\"location.href='./update.do?stdlist_no="+data[i].stdlist_no+"&pdsno="+data[i].pdsno+"&cateno="+data[i].cateno+"'\">";
+            value+="<img src='/study/user/my_pds/images/update.png' title='수정'></button>";
+            value+="<button class='btn btn-link' onclick='javascript:deletePds("+data[i].stdlist_no+","+data[i].pdsno+","+data[i].cateno+")'>";
+            value+="<img src='/study/user/my_pds/images/delete.png' title='삭제'></button>";
+          } 
+          
+          if(("${sessionScope.std_auth}"=="L") && cateno==2){
+            value+="<button class='btn btn-link' onclick=\"location.href='./update.do?stdlist_no="+data[i].stdlist_no+"&pdsno="+data[i].pdsno+"&cateno="+data[i].cateno+"'\">";
+            value+="<img src='/study/user/my_pds/images/update.png' title='수정'></button>";
+            value+="<button class='btn btn-link' onclick='javascript:deletePds("+data[i].stdlist_no+","+data[i].pdsno+","+data[i].cateno+")'>";
+            value+="<img src='/study/user/my_pds/images/delete.png' title='삭제'></button>";
+          } 
           
           value+="    </td>";
           value+="  </tr>";
@@ -347,9 +354,9 @@ function notice(cateno, stdlist_no){  // 페이지을 위해 start_page, end_pag
           
           /* 파일이 있는지 없는지 검사하여 이미지 출력 */
           if(data[i].pdsfile1==null || data[i].pdsfile1==""){
-            value+="  <img style='width: 200px; height:100px;' src='/study/my_pds/images/none.png'>";
+            value+="  <img style='width: 200px; height:100px;' src='/study/user/my_pds/images/none.png'>";
           }else{
-            value+="  <img style='width: 200px; height:100px;' src='/study/my_pds/storage/"+data[i].pdsfile1+"'>";
+            value+="  <img style='width: 200px; height:100px;' src='/study/user/my_pds/storage/"+data[i].pdsfile1+"'>";
           }
           
           /* 파일이 있는지 없는지 검사하여 파일명 출력 */
@@ -373,9 +380,9 @@ function notice(cateno, stdlist_no){  // 페이지을 위해 start_page, end_pag
         value+="  </tbody>";
         value+="</TABLE>";
         value+="    <div style='text-align:center'>";
-        value+="      <img src='/study/my_pds/images/none_content.gif'>";
+        value+="      <img src='/study/user/my_pds/images/none_content.gif'>";
         value+="    </div>";
-      }
+      } 
       
       /* 클릭하여 넘겨받은 cateno의 값에 따라 다른 DIV 출력 */
       if(cateno==2){
@@ -506,10 +513,10 @@ function send(){
         
         msg+="패스워드가 불일치 합니다."+"<br>";
         msg+="다시 확인 후 시도해주세요."+"<br>";
-        msg+="<button class='btn btn-link'><img src='/study/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br><br><br>";
+        msg+="<button class='btn btn-link'><img src='/study/user/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br><br><br>";
         msg+="<DIV style='text-align:center;'><button type='button' class='btn btn-info' data-dismiss='modal'>확인</button></DIV>";
-        $('#modal_title').html("<img src='/study/my_pds/images/warning.png'>패스워드 불일치");
-        $('#modal-body').html(msg); 
+        $('#modal_title').html("<img src='/study/user/my_pds/images/warning.png'>패스워드 불일치");
+        $('#modal-body').html(msg);  
         $('#modal_common').modal();
          
         $('#pdspasswd').val('');  /* 패스워드 값을 초기화하고 포커스를 준다. */
@@ -553,11 +560,11 @@ function send(){
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h3 class="modal-title text-error"><img src='/study/my_pds/images/warning.png'>게시글 삭제</h3>
+        <h3 class="modal-title text-error"><img src='/study/user/my_pds/images/warning.png'>게시글 삭제</h3>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"> 
         <!-- 모달 본문 -->
-        <span class="text-error" style="font-weight: bolder;"><img src='/study/my_pds/images/warn_message.png'>삭제하면 복구가 불가 합니다.</span><br>
+        <span class="text-error" style="font-weight: bolder;"><img src='/study/user/my_pds/images/warn_message.png'>삭제하면 복구가 불가 합니다.</span><br>
         <span class="text-error" style="font-weight: bolder;">정말로 삭제하시겠습니까?</span><br>
         <button id="confirm_content" class="btn btn-info" style="font-weight: bolder;">게시글 확인하러 가기</button>
       </div>
@@ -566,8 +573,8 @@ function send(){
           <input type="hidden" name="stdlist_no" id="stdlist_no" value="${param.stdlist_no}">
           <input type="hidden" name="cateno" id="cateno" value="">
           <input type="hidden" name="pdsno" id="pdsno" value="">
-          
-          <span style="font-weight: bolder;"><img src='/study/my_pds/images/passwd.png'>비밀번호</span> 
+           
+          <span style="font-weight: bolder;"><img src='/study/user/my_pds/images/passwd.png'>비밀번호</span> 
           <input type="password" id="pdspasswd" name="pdspasswd" placeholder="비밀번호 입력" maxlength="4" required="required" style="width: 90px; margin-bottom: 0px;">
           <button type="submit" class="btn btn-danger">삭제</button>
           <button type="button" class="btn btn-success" data-dismiss="modal">취소</button>
@@ -588,18 +595,17 @@ function send(){
       </div>
     </div>
   </div>
-  <!-- 비밀번호 검사 결과 Modal END -->
+  <!-- 비밀번호 검사 결과 Modal END --> 
  
-  <DIV>
-    <button class="btn btn-success" style="float: left; margin-top: 10px;" onclick="location.href='/study/mystudy/mystudy.do'"><i class="icon-left-open"></i>스터디 목록</button>
-    <h3 style="text-align: right;"><img src="/study/my_pds/images/pencile.png">스터디 공간</h3>
+  <DIV>    
+    <button class="btn btn-success btn-xs" style="float: left; margin-top: 10px;" onclick="location.href='/study/user/mystudy/mystudy.do'"><i class="icon-left-open"></i>스터디 목록</button>
+    <h4 style="text-align: right;"><img style="width: 1.5%;" src="/study/user/my_pds/images/pencile.png">스터디 공간</h4> 
     <hr style="color: #000000; border: solid 2px #000000; clear: both;">
   </DIV>
 
   <!-- 팝 오버 -->
   <!-- <a href="#" data-toggle="popover" title="안녕하세요 여러분!" data-content="저희 스터디에 오신 것을 환영 합니다.">스터디장의 인삿말</a> -->
-
-
+    
     <div class="tabbable"> <!-- 왼쪽과 오른쪽 탭에만 필요 -->
     <ul class="nav nav-tabs" id="tabs" style="text-align: center; font-weight: bolder;">
       <li id="li_tab2" class="" style="width: 33.3%;">
@@ -623,19 +629,19 @@ function send(){
         <ASIDE style='margin-bottom: 10px; width: 100%; float: right; text-align: center;'>
           <DIV style="float: left">
             <span id='search1' style="font-size: 15px; font-weight:bolder; display: none">[검색결과]<span id='search_count1'>0</span>건 조회됨</span>
-          </DIV>
+          </DIV> 
           <div class="input-append" style="margin-bottom: 0px; float:right">
-            <button class="btn btn-success" type="button" onclick="reset(1, 2, ${param.stdlist_no});">전체보기</button>
+            <button class="btn" type="button" onclick="reset(1, 2, ${param.stdlist_no});">전체보기</button>
             <div class="btn-group">
               <select>
                 <option>키워드</option>
-              </select>
+              </select> 
             </div>
-            <input style="margin-bottom: 0px; width: 30%;" type="text" id="pdsword1" name="pdsword1" placeholder="검색어 입력" required="required">
-            <button class="btn btn-success" type="button" onclick="set_nowpage_cookie(2, ${param.stdlist_no}, 1)">검색</button>
-            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}'"><img src='/study/my_pds/images/add_content.png'>등록</button>
+            <input style="margin-bottom: 0px; width: 30%; font-size: 12px;" type="text" id="pdsword1" name="pdsword1" placeholder="검색어 입력" required="required">
+            <button class="btn" type="button" onclick="set_nowpage_cookie(2, ${param.stdlist_no}, 1)">검색</button>
+            <button class="btn" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}'"><img src='/study/user/my_pds/images/add_content.png'>등록</button>
           </div>
-        </ASIDE>
+        </ASIDE> 
         <DIV id="table_space_1">
         </DIV>
       </div>
@@ -648,21 +654,21 @@ function send(){
             <span id='search2' style="font-size: 15px; font-weight:bolder; display: none">[검색결과]<span id='search_count2'>0</span>건 조회됨</span>
           </DIV> 
           <div class="input-append" style="margin-bottom: 0px; float:right;">
-            <button class="btn btn-success" type="button" onclick="reset(2, 3, ${param.stdlist_no});">전체보기</button>
+            <button class="btn" type="button" onclick="reset(2, 3, ${param.stdlist_no});">전체보기</button>
             <div class="btn-group">
               <select>
                 <option>키워드</option>
                 <!-- <option>제목</option>
                 <option>작성자</option> --> 
-              </select> 
+              </select>  
             </div>  
             
             <input style="margin-bottom: 0px; width: 30%;" type="text" id="pdsword2" name="pdsword2" placeholder="검색어 입력" required="required">
-            <button class="btn btn-success" type="button" onclick="notice(3,${param.stdlist_no} )">검색</button>
-            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=${cookie.cateno.value }'"><img src='/study/my_pds/images/add_content.png'>등록</button>
+            <button class="btn" type="button" onclick="notice(3,${param.stdlist_no} )">검색</button>
+            <button class="btn" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=${cookie.cateno.value }'"><img src='/study/user/my_pds/images/add_content.png'>등록</button>
           </div> 
         </ASIDE>
-        <DIV id="table_space_2">
+        <DIV id="table_space_2"> 
         </DIV>
       </div>
       <!-- ====== 자유게시판 탭 종료 =====-->
@@ -674,21 +680,21 @@ function send(){
             <span id='search3' style="font-size: 15px; font-weight:bolder; display: none">[검색결과]<span id='search_count3'>0</span>건 조회됨</span>
           </DIV>
           <div class="input-append" style="margin-bottom: 0px; float:right;">
-            <button class="btn btn-success" type="button" onclick="reset(3, 4, ${param.stdlist_no});">전체보기</button>
+            <button class="btn" type="button" onclick="reset(3, 4, ${param.stdlist_no});">전체보기</button>
             <div class="btn-group">
               <select>
                 <option>키워드</option>
                 <option>제목</option>
                 <option>작성자</option>
-              </select>
+              </select> 
             </div>
             <input style="margin-bottom: 0px; width: 30%;" type="text" id="pdsword3" name="pdsword3" placeholder="검색어 입력" required="required">
-            <button class="btn btn-success" type="button" onclick="notice(4,${param.stdlist_no} )">검색</button>
-            <button class="btn btn-success" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=${cookie.cateno.value }'"><img src='/study/my_pds/images/add_content.png'>등록</button>
+            <button class="btn" type="button" onclick="notice(4,${param.stdlist_no} )">검색</button>
+            <button class="btn" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}&cateno=${cookie.cateno.value }'"><img src='/study/user/my_pds/images/add_content.png'>등록</button>
           </div>
         </ASIDE>
         <DIV id="table_space_3">
-        </DIV>
+        </DIV> 
       </div>
       <!-- ====== 자료실 탭 종료 ===== -->
     </div>

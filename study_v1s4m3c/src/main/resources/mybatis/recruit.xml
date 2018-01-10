@@ -37,5 +37,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   , std_auth = 'T'
   where memberno = #{memberno}
   </update>
+  
+  <!-- 이동석 추가 -->
+  <select id= "check_leader" resultType="String" parameterType="Hashmap">
+  select std_auth
+  from recruit
+  where memberno = #{memberno}
+  and stdlist_no = #{stdlist_no}
+  </select>
 
 </mapper>

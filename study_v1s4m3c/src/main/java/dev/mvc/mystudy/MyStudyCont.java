@@ -28,27 +28,25 @@ public class MyStudyCont {
   @Qualifier("dev.mvc.study.StudyProc")
   private StudyProcInter studyProc;
   
-  public MyStudyCont() {
-    System.out.println(" --> StudyCont created.");
-  }
-  
   @RequestMapping(value="/main.do", method=RequestMethod.GET)
   public ModelAndView main(){
     System.out.println(" --> main.jsp 호출");
     ModelAndView mav=new ModelAndView();
     mav.setViewName("/main/index");
     
-    return mav;
+    return mav; 
   }
   
-  @RequestMapping(value="/mystudy/mystudy.do", method=RequestMethod.GET)
+  @RequestMapping(value="/user/mystudy/mystudy.do", method=RequestMethod.GET)
   public ModelAndView myStudy(HttpServletRequest request){
     System.out.println(" --> mystudy_main.jsp 호출");
     ModelAndView mav=new ModelAndView();
-    mav.setViewName("/mystudy/mystudy_main");
+    mav.setViewName("/user/mystudy/mystudy_main");
     
     HttpSession session=request.getSession(false);
     int memberno=(Integer)session.getAttribute("memberno");
+    
+    session.removeAttribute("std_auth"); 
     
     System.out.println(" --> MyStudyCont.java - memberno:"+memberno);
     
@@ -69,7 +67,7 @@ public class MyStudyCont {
    * @return
    */
   
-  @RequestMapping(value="/mystudy/my_apply_list.ajax", method=RequestMethod.GET) 
+  @RequestMapping(value="/user/mystudy/my_apply_list.ajax", method=RequestMethod.GET) 
   public ModelAndView my_apply_list(HttpServletRequest request){
     System.out.println(" --> my_apply_list() 호출");
     
@@ -92,7 +90,7 @@ public class MyStudyCont {
   // @RequestBody  : Http 요청 몸체를 자바 객체로 변환.
   
   @ResponseBody 
-  @RequestMapping(value="/mystudy/cancel_apply.ajax", method=RequestMethod.POST) 
+  @RequestMapping(value="/user/mystudy/cancel_apply.ajax", method=RequestMethod.POST) 
   public String cancel_apply(HttpServletRequest request, String[] recuritno){
     // 문자열로 받을 때.
     // @RequestBody 가 있으면 URL의 파라미터의 형태 그대로 받아(문자열) 들인다. --> String recuritno 일 때.
@@ -116,7 +114,7 @@ public class MyStudyCont {
         result=result+1;
       }
     }
-    
+     
     JSONObject obj=new JSONObject();
     
     if(recuritno.length==result){

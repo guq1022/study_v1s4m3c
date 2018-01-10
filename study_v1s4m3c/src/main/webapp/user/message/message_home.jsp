@@ -33,7 +33,7 @@ $(function(){
     websocket.send("<%=memid %>"+"/connect"); 
   }
   
-  websocket.onclose=function(){
+  websocket.onclose=function(){ 
     console.log("서버 연결 해제");
   }
   
@@ -212,27 +212,27 @@ function msg_create_proc(send_memid){
             <DIV>
               <!-- 현재 위치 출력 (공통) -->
               <span id='category' style='float: left;'>받은 쪽지함</span>
-              
+               
               <!-- 쪽지 검색 창 (공통) -->
               <form id='search_msg' name='search_msg'> 
                 <fieldset style="text-align: right;">
-                  <select style="font-size: 14px;" id='search_area'>
+                  <select style="font-size: 10px;" id='search_area'>
                     <option value='none'>선택(영역)</option>
                     <option value='0'>받은쪽지</option> 
                     <option value='1'>보낸쪽지</option>
                     <option value='2'>쪽지보관함</option>
                     <option value='3'>내게쓴쪽지함</option> 
                   </select>
-                  
-                  <select style="font-size: 14px;" id='search_condition'>
+                   
+                  <select style="font-size: 10px;" id='search_condition'>
                     <option value="none">선택(조건)</option>
                     <option value="search_id">아이디</option>
                     <option value="msg_title">제목</option>
                     <option value="msg_content">내용</option>
                   </select>
-                  
-                  <input class="form-search" style="margin-bottom: 0px;" type="text" id='msgword' name='msgword' placeholder="쪽지검색">
-                  <button type="button" class='btn btn-link' onclick='search_control();'><img src='./images/search.png'>검색</button> 
+                   
+                  <input class="form-search" style="margin-bottom: 0px; font-size: 10px;" type="text" id='msgword' name='msgword' placeholder="쪽지검색">
+                  <button type="button" class='btn btn-link btn-xs' style="margin-left: -6px;" onclick='search_control();'><img src='./images/search.png'>검색</button> 
                 </fieldset>
               </form>
             </DIV>
@@ -366,7 +366,7 @@ function msg_create_proc(send_memid){
           </TABLE>
         </DIV>
         
-        <DIV id='msg_none' style="text-align: center;">
+        <DIV id='msg_none' style="text-align: center; display: none;"> 
           <!-- AJAX를 통해 삽입 -->
         </DIV>
         

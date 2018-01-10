@@ -1,5 +1,6 @@
 package dev.mvc.recruit;
 
+import java.util.HashMap;
 import java.util.List;
 
 import dev.mvc.studylist.StudyListVO;
@@ -61,5 +62,14 @@ public interface RecruitDAOInter {
    */
   public int confirm_Y(int memberno);
   
+  /**
+   * <xmp>
+   *   <select id= "check_leader" resultType="String" parameterType="Hashmap">
+   *   현재 회원이 해당 스터디의 팀장인지 아닌지 조회
+   * </xmp>
+   * @param hashMap
+   * @return
+   */
+  public String check_leader(HashMap<String, Object> hashMap);
 
 }

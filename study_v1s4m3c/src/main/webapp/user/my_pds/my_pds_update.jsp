@@ -11,8 +11,8 @@
 <meta charset="UTF-8">
 <title>Study Matching Web Site</title>
 
-<link href="/study/my_pds/css/my_pds_style.css" rel='Stylesheet' type='text/css'>
-
+<link href="/study/user/my_pds/css/my_pds_style.css" rel='Stylesheet' type='text/css'>
+ 
 <!-------------------------- Web Logo Part -------------------------->
 <link rel="shortcut icon" href="<%=root%>/menu/images/ico/Short Logo.png">
 <!---------------------------------------------------------------------->
@@ -20,9 +20,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="../../ckeditor/ckeditor.js"></script>
  
-<script type="text/JavaScript">
+<script type="text/JavaScript">  
   window.onload=function(){
     CKEDITOR.replace('pdscontent');  // <TEXTAREA>태그 id 값
     
@@ -66,8 +66,8 @@
           msg+="패스워드가 불일치 합니다."+"<br>";
           msg+="다시 확인 후 시도해주세요."+"<br><br>";
           msg+="<button class='btn btn-link'><img src='/study/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br>";
-          $('#modal_title').html("<img src='/study/my_pds/images/warning.png'>패스워드 불일치");
-          $('#modal_content').html(msg);
+          $('#modal_title').html("<img src='/study/user/my_pds/images/warning.png'>패스워드 불일치");
+          $('#modal_content').html(msg); 
           $('#modal_footer').html("<button type='button' class='btn btn-info' data-dismiss='modal'>확인</button>");
           $('#modal_pwcheck').modal();
           
@@ -120,9 +120,9 @@
           deletefile(pdsno, filename, thumb);
         }else{
           msg+="패스워드가 불일치 합니다."+"<br>";
-          msg+="다시 확인 후 시도해주세요."+"<br><br>";
-          msg+="<button class='btn btn-link'><img src='/study/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br>";
-          $('#modal_title').html("<img src='/study/my_pds/images/warning.png'>패스워드 불일치");
+          msg+="다시 확인 후 시도해주세요."+"<br><br>"; 
+          msg+="<button class='btn btn-link'><img src='/study/user/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br>";
+          $('#modal_title').html("<img src='/study/user/my_pds/images/warning.png'>패스워드 불일치");
           $('#modal_content').html(msg);
           $('#modal_footer').html("<button type='button' class='btn btn-info' data-dismiss='modal'>확인</button>");
           $('#modal_pwcheck').modal();
@@ -163,7 +163,7 @@
           $('#file_exist').text("등록된 파일 없음");
           $('#del_file_btn').hide();
           
-          $('#modal_title').html("<img src='/study/my_pds/images/warning.png'>파일 삭제 완료");
+          $('#modal_title').html("<img src='/study/user/my_pds/images/warning.png'>파일 삭제 완료");
           $('#modal_content').html("삭제 완료");
           $('#modal_footer').html("<button type='button' class='btn btn-info' data-dismiss='modal'>확인</button>");
         }
@@ -192,16 +192,16 @@
     console.log(thumb);
     
     msg+="파일을 삭제하면 복구할 수 없습니다.";
-    msg+="<button class='btn btn-link'><img src='/study/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br>";
+    msg+="<button class='btn btn-link'><img src='/study/user/my_pds/images/ask.png'>패스워드 분실 - [관리자에게 쪽지 보내기]</button>"+"<br>";
     
-    footer+='<span style="font-weight: bolder;"><img src="/study/my_pds/images/passwd.png">비밀번호</span> ';
+    footer+='<span style="font-weight: bolder;"><img src="/study/user/my_pds/images/passwd.png">비밀번호</span> ';
     footer+='<input type="password" id="passwd" name="passwd" placeholder="비밀번호 입력" maxlength="4" required="required" style="width: 90px; margin-bottom: 0px;">';
     footer+='<button type="button" class="btn btn-danger" onclick="passwd_ck(\''+pdsno+'\',\''+filename+'\',\''+thumb+'\')">삭제</button>';
     footer+='<button type="button" class="btn btn-success" data-dismiss="modal">취소</button>';
     
-    $('#modal_title').html("<img src='/study/my_pds/images/warning.png'>파일 삭제");
+    $('#modal_title').html("<img src='/study/user/my_pds/images/warning.png'>파일 삭제");
     $('#modal_content').html(msg);
-    $('#modal_footer').html(footer);
+    $('#modal_footer').html(footer); 
     $('#modal_pwcheck').modal();
     
   }
@@ -254,24 +254,24 @@
         <input type="hidden" name="pdsno" id="pdsno" value="${param.pdsno }">
         <input type="hidden" name="mylistno" id="mylistno" value="${My_pdsVO.mylistno }">
         
-        <div class="control-group">
-          <label class="control-label" for="title" style="width: 10%; text-align: center;"><img src='/study/my_pds/images/icon.png'>제목</label>
+        <div class="control-group"> 
+          <label class="control-label" for="title" style="width: 10%; text-align: center;"><img src='/study/user/my_pds/images/icon.png'>제목</label>
           <div class="controls" style="margin-left: 15px;">
             <input style="width: 70%;" type="text" id="pdstitle" name="pdstitle" value="${My_pdsVO.pdstitle }" required="required">
-            <span style="width: 20%; text-align: right; float: right;"><img src='/study/my_pds/images/member2.png'>작성자:${My_pdsVO.memname }</span>
+            <span style="width: 20%; text-align: right; float: right;"><img src='/study/user/my_pds/images/member2.png'>작성자:${My_pdsVO.memname }</span>
           </div>
-        </div>
+        </div> 
         
         <!-- 본문 내용 -->
         <div class="control-group">
           <div class="controls" style="margin-left: 15px;">
             <textarea style="width: 90%; resize:none; height: 500px;" name="pdscontent" id="pdscontent">${My_pdsVO.pdscontent}</textarea>
           </div>
-        </div>
+        </div> 
         
         <!-- 등록되어 있는 파일 -->
-        <div class="control-group"> 
-          <label class="control-label" for="file" style="width: 10%; text-align: left;"><img src='/study/my_pds/images/file.png'>현재파일</label>
+        <div class="control-group">  
+          <label class="control-label" for="file" style="width: 10%; text-align: left;"><img src='/study/user/my_pds/images/file.png'>현재파일</label>
           <div class="controls" style="margin-left: 15px;">
             <c:choose>
               <c:when test="${My_pdsVO.pdsfile1 != null}">
@@ -287,21 +287,21 @@
         </div>
         
         <div class="control-group"> 
-          <label class="control-label" for="file" style="width: 10%; text-align: left;"><img src='/study/my_pds/images/file_add.png'>첨부파일</label>
+          <label class="control-label" for="file" style="width: 10%; text-align: left;"><img src='/study/user/my_pds/images/file_add.png'>첨부파일</label>
           <div class="controls" style="margin-left: 15px;">
             <input type="file" name='file1MF' id='file1MF'>
           </div>
         </div>
         
-        <div class="control-group"> 
-          <label class="control-label" for="word" style="width: 10%; text-align: left;"><img src='/study/my_pds/images/word.png'>검색어</label>
+        <div class="control-group">  
+          <label class="control-label" for="word" style="width: 10%; text-align: left;"><img src='/study/user/my_pds/images/word.png'>검색어</label>
           <div class="controls" style="margin-left: 15px;">
             <input type="text" name='pdsword' id='pdsword' value="${My_pdsVO.pdsword }">
           </div>
         </div>
         
-        <div class="control-group">
-          <label class="control-label" for="passwd" style="width: 10%; text-align: left;"><img src='/study/my_pds/images/passwd.png'>비밀번호</label>
+        <div class="control-group"> 
+          <label class="control-label" for="passwd" style="width: 10%; text-align: left;"><img src='/study/user/my_pds/images/passwd.png'>비밀번호</label>
           <div class="controls" style="margin-left: 15px;">
             <input type="password" id="pdspasswd" name="pdspasswd" placeholder="비밀번호 입력" maxlength="4" required="required" style="width: 90px;">
           </div>
@@ -311,7 +311,7 @@
           <button class="btn btn-success" type="submit">수정</button>
           <button class="btn btn-danger" type="button" onclick="history.go(-1);">취소</button>
         </div>
-      </FORM>
+      </FORM> 
     </DIV>
   </DIV>
   

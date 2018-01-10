@@ -70,9 +70,9 @@ String root = request.getContextPath();
           <ul class="nav" id="top-navigation">
 
             <!-- <Menu1> 내 스터디 -->
-            <li><a href="${pageContext.request.contextPath }/mystudy/mystudy.do">내 스터디</a></li>
+            <li><a href="${pageContext.request.contextPath }/user/mystudy/mystudy.do">내 스터디</a></li>
            
-            <!-- <Menu2> 스터티그룹 찾기 -->
+            <!-- <Menu2> 스터티그룹 찾기 --> 
             <li><a href="#">스터디 그룹</a></li>
             
             <!-- <Menu3> 스터디룸 찾기 -->

@@ -20,11 +20,11 @@ String root = request.getContextPath(); // 절대 경로 지정
 </head>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
-<script type="text/javascript" src="../js/jquery.cookie.js"></script>
+ 
+<script type="text/javascript" src="../../js/jquery.cookie.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(function(){ 
   
   $("tbody > tr").mouseover(function(){
     $("td", this).css("background-color", "rgb(222, 213, 213)");
@@ -61,16 +61,16 @@ $(document).ready(function(){
    
 });
 
-function load(stdlist_no){
-  location.href="/study/mystudy/mystudy_space.do?stdlist_no="+stdlist_no;
+function load(stdlist_no){ 
+  location.href="/study/user/mystudy/mystudy_space.do?stdlist_no="+stdlist_no;
 }
 
-/**
+/** 
  * 현재 내가 신청한 스터디 정보와 상태
  */
 function my_apply_list(){
   $.ajax({
-    url: "./my_apply_list.ajax", 
+    url: "./my_apply_list.ajax",  
     type: "GET",   
     cache: false,    // 일반적으로 false
     dataType: "json", // or json 

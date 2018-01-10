@@ -1,5 +1,6 @@
 package dev.mvc.recruit;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,11 @@ public class RecruitProc implements RecruitProcInter{
   public int create(StudyListVO studyListVO) {
     
     return recruitDAO.create(studyListVO);
+  }
+
+  @Override
+  public String check_leader(HashMap<String, Object> hashMap) {
+    return recruitDAO.check_leader(hashMap); 
   }
 
 }

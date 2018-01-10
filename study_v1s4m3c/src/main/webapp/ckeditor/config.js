@@ -29,15 +29,15 @@ config.uiColor = '#D3D3D3';
 config.enterMode = CKEDITOR.ENTER_BR; //엔터키 태그 1:<p>, 2:<br>, 3:<div>
 config.font_defaultLabel = 'Malgun Gothic'; //기본글씨 Malgun Gothic - 맑은 고딕
 config.font_names = '굴림체/Gulim; 돋움체/Dotum; 맑은 고딕/맑은 고딕;';
-
+ 
 // 글꼴과 사이즈를 지정할 수 있다.
 config.fontSize_defaultLabel = '24px'; 
 config.fontSize_sizes = '10/10px;12/12px;14/14px;16/16px;20/20px;24/24px;28/28px;36/36px;48/48px;72/72px;';
- 
-config.filebrowserBrowseUrl = '../ckfinder/ckfinder.html';
-    config.filebrowserImageBrowseUrl = '../ckfinder/ckfinder.html?type=Images';
-    config.filebrowserFlashBrowseUrl = '../ckfinder/ckfinder.html?type=Flash';
-    config.filebrowserUploadUrl = '../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files';
-    config.filebrowserImageUploadUrl = '../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images';
-    config.filebrowserFlashUploadUrl = '../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash'; 
+
+config.filebrowserBrowseUrl = '../../ckfinder/ckfinder.html'; 
+    config.filebrowserImageBrowseUrl = '../../ckfinder/ckfinder.html?type=Images';
+    config.filebrowserFlashBrowseUrl = '../../ckfinder/ckfinder.html?type=Flash';
+    config.filebrowserUploadUrl = '../../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files';
+    config.filebrowserImageUploadUrl = '../../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images';
+    config.filebrowserFlashUploadUrl = '../../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash'; 
 };

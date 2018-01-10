@@ -18,7 +18,7 @@ public class RecruitCont {
 
   @Autowired
   @Qualifier("dev.mvc.recruit.RecruitProc")
-    private RecruitProcInter recruitProc = null;
+  private RecruitProcInter recruitProc = null;
   
   public RecruitCont(){
     System.out.println("-->RecruitCont created");

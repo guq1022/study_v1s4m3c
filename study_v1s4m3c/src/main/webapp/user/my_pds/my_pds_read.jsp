@@ -12,8 +12,8 @@
 <meta charset="UTF-8">
 <title>Study Matching Web Site</title>
 
-<link href="/study/my_pds/css/my_pds_style.css" rel='Stylesheet' type='text/css'>
-
+<link href="/study/user/my_pds/css/my_pds_style.css" rel='Stylesheet' type='text/css'>
+ 
 <!-------------------------- Web Logo Part -------------------------->
 <link rel="shortcut icon" href="<%=root%>/menu/images/ico/Short Logo.png">
 <!---------------------------------------------------------------------->
@@ -148,11 +148,11 @@ function like(pdsno){
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h3 class="modal-title text-error"><img src='/study/my_pds/images/warning.png'>게시글 삭제</h3>
+        <h3 class="modal-title text-error"><img src='/study/user/my_pds/images/warning.png'>게시글 삭제</h3>
       </div> 
       <div class="modal-body"> 
         <!-- 모달 본문 -->
-        <span class="text-error" style="font-weight: bolder;"><img src='/study/my_pds/images/warn_message.png'>삭제하면 복구가 불가 합니다.</span><br>
+        <span class="text-error" style="font-weight: bolder;"><img src='/study/user/my_pds/images/warn_message.png'>삭제하면 복구가 불가 합니다.</span><br>
         <span class="text-error" style="font-weight: bolder;">정말로 삭제하시겠습니까?</span><br>
       </div>
       <div id="modal_footer" class="modal-footer">
@@ -161,12 +161,12 @@ function like(pdsno){
           <input type="hidden" name="cateno" id="cateno" value="${cookie.cateno.value }">
           <input type="hidden" name="pdsno" id="pdsno" value="">
           
-          <span><img src='/study/my_pds/images/passwd.png'>비밀번호:</span> 
+          <span><img src='/study/user/my_pds/images/passwd.png'>비밀번호:</span> 
           <input type="password" id="pdspasswd" name="pdspasswd" placeholder="비밀번호 입력" maxlength="4" required="required" style="width: 90px; margin-bottom: 0px;">
           <button type="submit" class="btn btn-danger">삭제</button>
           <button type="button" class="btn btn-success" data-dismiss="modal">취소</button>
         </form>
-      </div>
+      </div> 
     </div>
   </div>
   
@@ -193,7 +193,7 @@ function like(pdsno){
   <!-- 비밀번호 검사 결과 Modal END -->
    
   <DIV>
-    <button class="btn btn-success" style="float: left; margin-top: 10px;" onclick="location.href='/study/mystudy/mystudy_space.do?stdlist_no=${param.stdlist_no}'"><i class="icon-left-open"></i>My Study</button>
+    <button class="btn btn-success" style="float: left; margin-top: 10px;" onclick="location.href='/study/user/mystudy/mystudy_space.do?stdlist_no=${param.stdlist_no}'"><i class="icon-left-open"></i>My Study</button>
     <h3 style="float: right"><img src="./images/pencile.png">글</h3>
     <hr style="color: #000000; border: solid 2px #000000; clear: both;">
   </DIV> 
@@ -204,7 +204,7 @@ function like(pdsno){
       <button class="side_btngrp btn btn-success btn-small" style="width: 100%;" onclick="location.href='./create.do?stdlist_no=${param.stdlist_no}'">등록</button><br><br>
       <button class="side_btngrp btn btn-warning btn-small" style="width: 100%;" onclick="location.href='./update.do?stdlist_no=${param.stdlist_no}&pdsno=${param.pdsno }'">수정</button><br><br>
       <button class="side_btngrp btn btn-danger btn-small" style="width: 100%;" onclick="deletePds('${param.stdlist_no}', '${param.pdsno}')">삭제</button><br><br>
-      <button class="side_btngrp btn btn-info btn-small" style="width: 100%;" onclick="like(${param.pdsno });"><img id="like_img" src='/study/my_pds/images/like_after.png'></button>
+      <button class="side_btngrp btn btn-info btn-small" style="width: 100%;" onclick="like(${param.pdsno });"><img id="like_img" src='/study/user/my_pds/images/like_after.png'></button>
     </DIV>
  
     <DIV style="margin-top: 20px;">
@@ -212,27 +212,27 @@ function like(pdsno){
         <li class="li_none">
           <DIV style="background-color: #eee;"> 
             <div>
-              <span style="float: right;"><img src='/study/my_pds/images/member2.png'>작성자:${My_pdsVO.memname }</span>
-              <span style="float: right;"><img id="like_img" src='/study/my_pds/images/like_before.png'>좋아요:<span id="like_cnt">${My_pdsVO.pdslike }</span>&nbsp;&nbsp;&nbsp;</span>
-              <span style="float: right;"><img src='/study/my_pds/images/cnt.png'>조회수:${My_pdsVO.pdscnt }&nbsp;&nbsp;&nbsp;</span>
-              <span><img src='/study/my_pds/images/icon.png'>작성일:${My_pdsVO.pdsdate.substring(0,10) }</span>
-            </div>
+              <span style="float: right;"><img src='/study/user/my_pds/images/member2.png'>작성자:${My_pdsVO.memname }</span>
+              <span style="float: right;"><img id="like_img" src='/study/user/my_pds/images/like_before.png'>좋아요:<span id="like_cnt">${My_pdsVO.pdslike }</span>&nbsp;&nbsp;&nbsp;</span>
+              <span style="float: right;"><img src='/study/user/my_pds/images/cnt.png'>조회수:${My_pdsVO.pdscnt }&nbsp;&nbsp;&nbsp;</span>
+              <span><img src='/study/user/my_pds/images/icon.png'>작성일:${My_pdsVO.pdsdate.substring(0,10) }</span>
+            </div> 
           </DIV>
         </li>
       
         <li class="li_none" style="background-color: #eee">
-          <span><img src='/study/my_pds/images/icon.png'>제목:</span>
+          <span><img src='/study/user/my_pds/images/icon.png'>제목:</span>
           <span style="width: 90%; background-color: #eee" id="pdstitle">${My_pdsVO.pdstitle }</span>
         </li>
-        
+         
         <li class="li_none" style="background-color: #eee">
-          <span><img src='/study/my_pds/images/icon.png'>[본문 내용]</span><br>
+          <span><img src='/study/user/my_pds/images/icon.png'>[본문 내용]</span><br>
           <hr style="color: #000000; border: solid 1px; margin-top: 10px; margin-bottom: 10px;">
           <span>${My_pdsVO.pdscontent }</span>
         </li>
         
-        <li class="li_none">
-          <span><img src='/study/my_pds/images/file.png'>첨부파일:</span>
+        <li class="li_none"> 
+          <span><img src='/study/user/my_pds/images/file.png'>첨부파일:</span>
           <c:choose>
             <c:when test="${My_pdsVO.pdsfile1 != null}">
               <A href='${pageContext.request.contextPath}/download?dir=/my_pds/storage&filename=${My_pdsVO.pdsfile1}'>${My_pdsVO.pdsfile1}</A> (${My_pdsVO.pdsfilesize}KB)
@@ -246,7 +246,7 @@ function like(pdsno){
           <!-- 2단계 : 복수 파일 -->
         </li>
         
-      </ul>
+      </ul> 
     </DIV>
   </DIV>
   

@@ -201,11 +201,13 @@ function msg_recv_list(nowpage){
         $('#category').html("<img src='./images/message.png'>받은쪽지함");  
       }
       
+      //$('#msg_recv_list').css("display","");
+      $('#msg_recv_list').fadeIn();                   // 받은 쪽지함 테이블 출력. 
       $('#read_msg').css("display","none");
-      $('#msg_recv_list').css("display","");          // 받은 쪽지함 테이블 출력.
       $('#msg_send_list').css("display","none");      // 보낸 쪽지함 테이블 감추기.
       $('#msg_repo_list').css("display","none");      // 쪽지 보관함 테이블 감추기.
       $('#msg_self_list').css("display","none");
+      $('#msg_recv_list').fadeIn();
       
       $('#send_list_tbody').html("");
       $('#repo_list_tbody').html("");
@@ -248,11 +250,13 @@ function msg_recv_list(nowpage){
         $('#paging').html(data[2].paging);  
         $("#read_msg").css('display', 'none');          // 읽기 DIV 감추기.
         $('#msg_none').html("");                        // 쪽지 리스트 없을시 출력되는 DIV
+        $('#msg_none').fadeOut();
         $('#recv_list_tbody').html(add_tr);             // 끼워넣기
       }else{ // 메세지 전송 실패
         $('#paging').html(""); 
         $('#recv_list_tbody').html("");
         $('#msg_none').html("<img src='./images/none_recv_msg.jpg' style='width:50%;'>");
+        $('#msg_none').fadeIn(); 
       }
     },
     error: function (request, status, error){
@@ -294,14 +298,15 @@ function msg_send_list(nowpage){
         $('#category').html("<img src='./images/msg_send.png'>보낸쪽지함");
       }
       
+      //$('#msg_send_list').css("display","");          // 보낸 쪽지함 테이블 출력
+      $('#msg_send_list').fadeIn();                   // 보낸 쪽지함 테이블 출력
       $('#read_msg').css("display","none");           // 쪽지 읽기 영역 감추기
       $('#msg_recv_list').css("display","none");      // 받은 쪽지함 테이블 감추기
-      $('#msg_send_list').css("display","");          // 보낸 쪽지함 테이블 출력
       $('#msg_repo_list').css("display","none");          // 쪽지 보관함 테이블 감추기
       $('#msg_self_list').css("display","none");
       
       $('#recv_list_tbody').html("");
-      $('#repo_list_tbody').html("");
+      $('#repo_list_tbody').html(""); 
       $('#self_list_tbody').html("");
       
       $('#msg_recv_title').html("받은쪽지함("+data[1].recv_all_count+")");
@@ -340,12 +345,14 @@ function msg_send_list(nowpage){
         $('#paging').css("display",""); 
         $('#paging').html(data[2].paging);
         $("#read_msg").css('display', 'none'); // 읽기 DIV 감추기.
-        $('#msg_none').html("");
+        $('#msg_none').html(""); 
+        $('#msg_none').fadeOut();
         $('#send_list_tbody').html(add_tr);  // 끼워넣기
       }else{ // 보낸 쪽지 없음
         $('#paging').html("");           // 공백
         $('#send_list_tbody').html("");  // 공백
         $('#msg_none').html("<img src='./images/none_send_msg.jpg' style='width:50%;'>");
+        $('#msg_none').fadeIn(); 
       }
     },
     error: function (request, status, error){
@@ -388,8 +395,9 @@ function msg_repo_list(nowpage){
       $('#read_msg').css("display","none");           // 쪽지 읽기 영역 감추기
       $('#msg_send_list').css("display","none");      // 보낸 쪽지함 테이블 감추기.
       $('#msg_recv_list').css("display","none");      // 받은 쪽지함 테이블 감추기.
-      $('#msg_repo_list').css("display","");          // 쪽지 보관함 테이블 출력
-      $('#msg_self_list').css("display","none");
+      //$('#msg_repo_list').css("display","");
+      $('#msg_self_list').css("display","none"); 
+      $('#msg_repo_list').fadeIn();                   // 쪽지 보관함 테이블 출력
       
       $('#recv_list_tbody').html("");
       $('#send_list_tbody').html("");  
@@ -422,11 +430,13 @@ function msg_repo_list(nowpage){
         $('#paging').html(data[2].paging);
         $("#read_msg").css('display', 'none');          // 읽기 DIV 감추기.
         $('#msg_none').html("");                        // 쪽지 리스트 없을시 출력되는 DIV
+        $('#msg_none').fadeOut();
         $('#repo_list_tbody').html(add_tr);             // 끼워넣기
-      }else{ // 쪽지 데이터 없을 때
+      }else{ // 쪽지 데이터 없을 때 
         $('#paging').html("");
         $('#repo_list_tbody').html("");
         $('#msg_none').html("<img src='./images/none_recv_msg.jpg' style='width:50%;'>");
+        $('#msg_none').fadeIn();
       }
     },
     error: function (request, status, error){
@@ -470,7 +480,8 @@ function msg_self_list(nowpage){
       $('#msg_recv_list').css("display","none");          // 받은 쪽지함 테이블 출력.
       $('#msg_send_list').css("display","none");      // 보낸 쪽지함 테이블 감추기.
       $('#msg_repo_list').css("display","none");      // 쪽지 보관함 테이블 감추기.
-      $('#msg_self_list').css("display","");
+      $('#msg_self_list').fadeIn(); 
+      //$('#msg_self_list').css("display","");
        
       $('#recv_list_tbody').html("");
       $('#send_list_tbody').html("");
@@ -506,11 +517,13 @@ function msg_self_list(nowpage){
         $('#paging').html(data[2].paging);  
         $("#read_msg").css('display', 'none');          // 읽기 DIV 감추기.
         $('#msg_none').html("");                        // 쪽지 리스트 없을시 출력되는 DIV
+        $('#msg_none').fadeOut();
         $('#self_list_tbody').html(add_tr);             // 끼워넣기
       }else{ // 메세지 전송 실패
         $('#paging').html("");  
         $('#self_list_tbody').html("");
         $('#msg_none').html("<img src='./images/none_recv_msg.jpg' style='width:50%;'>");
+        $('#msg_none').fadeIn();
       }
     },
     error: function (request, status, error){
@@ -683,7 +696,10 @@ function remove_proc(index){  // index=0 -> 받은 쪽지함
         
         if(after_count%5==0){
           nowpage=nowpage-1;
-        }
+          if(nowpage<=0){
+            nowpage=1; 
+          }
+        }  
         
         if(index==0){
           msg_recv_list(nowpage);    // 받은 쪽지 리스트 로드
