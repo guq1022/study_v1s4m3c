@@ -15,7 +15,7 @@ public class RecruitDAO implements RecruitDAOInter{
   private SqlSessionTemplate mybatis;
   
   public RecruitDAO(){
-    System.out.println("--> RecruitDAO created.");
+   // System.out.println("--> RecruitDAO created.");
   }
 
   @Override
@@ -37,20 +37,46 @@ public class RecruitDAO implements RecruitDAOInter{
   }
 
   @Override
-  public int leader_auth(int memberno) {
+  public int leader_auth(HashMap hashmap) {
     
-    return mybatis.update("recruit.leader_auth", memberno);
+    return mybatis.update("recruit.leader_auth", hashmap);
   }
 
   @Override
-  public int confirm_Y(int memberno) {
+  public int confirm_Y(HashMap hashmap) {
     
-    return mybatis.update("recruit.confirm_Y", memberno);
+    return mybatis.update("recruit.confirm_Y", hashmap);
+  }
+  
+  @Override
+  public int confirm_N(HashMap hashmap) {
+    
+    return mybatis.update("recruit.confirm_N", hashmap);
   }
 
+  
+  @Override
+  public List<Recruit_MemberVO> recruit_list_Y(int stdlist_no) {
+    
+    return mybatis.selectList("recruit.recruit_Y", stdlist_no);
+  }
+
+  @Override
+  public int check_memberno(HashMap hashmap) {
+    
+    return mybatis.selectOne("recruit.check_memberno", hashmap);
+  }
+
+  @Override
+  public int delete(int stdlist_no) {
+    
+    return mybatis.delete("recruit.delete", stdlist_no);
+  }
+  
   @Override
   public String check_leader(HashMap<String, Object> hashMap) {
     return mybatis.selectOne("recruit.check_leader", hashMap);
   }
-  
+
+
 }

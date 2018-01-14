@@ -37,7 +37,7 @@ public class StudyList_MemberVO {
   /**
    *  스터디그룹 등록일자
    */
-  private String stdlist_stratdate;
+  private String stdlist_date;
   /**
    *  스터디 그룹 모집 총 인원수
    *  stdlist_curr_num = 1;
@@ -64,7 +64,7 @@ public class StudyList_MemberVO {
   /**
    *  스터디 추천 수
    */
-  private int stdlist_recom_cnt;
+  private int stdlist_goodcnt;
   
   ///////////////////////////////////////////////////////////////////////////////////
   
@@ -159,12 +159,12 @@ public class StudyList_MemberVO {
     this.stdlist_dow = stdlist_dow;
   }
 
-  public String getStdlist_stratdate() {
-    return stdlist_stratdate;
+  public String getStdlist_date() {
+    return stdlist_date;
   }
 
-  public void setStdlist_stratdate(String stdlist_stratdate) {
-    this.stdlist_stratdate = stdlist_stratdate;
+  public void setStdlist_date(String stdlist_date) {
+    this.stdlist_date = stdlist_date;
   }
 
   public int getStdlist_tot_num() {
@@ -199,12 +199,12 @@ public class StudyList_MemberVO {
     this.stdlist_cnt = stdlist_cnt;
   }
 
-  public int getStdlist_recom_cnt() {
-    return stdlist_recom_cnt;
+  public int getStdlist_goodcnt() {
+    return stdlist_goodcnt;
   }
 
-  public void setStdlist_recom_cnt(int stdlist_recom_cnt) {
-    this.stdlist_recom_cnt = stdlist_recom_cnt;
+  public void setStdlist_goodcnt(int stdlist_goodcnt) {
+    this.stdlist_goodcnt = stdlist_goodcnt;
   }
 
   public int getMemberno() {

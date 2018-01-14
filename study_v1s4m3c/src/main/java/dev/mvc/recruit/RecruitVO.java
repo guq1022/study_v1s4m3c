@@ -1,11 +1,6 @@
 package dev.mvc.recruit;
 
-import dev.mvc.studylist.StudyListVO;
-
 public class RecruitVO {
-  
-  
-  private StudyListVO studyListVO;
   
   /**
    *  모집번호
@@ -40,16 +35,6 @@ public class RecruitVO {
   public RecruitVO() {
  
   }
-
-  public StudyListVO getStudyListVO() {
-    return studyListVO;
-  }
-
-
-  public void setStudyListVO(StudyListVO studyListVO) {
-    this.studyListVO = studyListVO;
-  }
-
 
   public int getRecruitno() {
     return recruitno;

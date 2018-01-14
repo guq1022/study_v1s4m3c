@@ -41,26 +41,68 @@ public interface RecruitDAOInter {
    */
   public List<Recruit_MemberVO> recruit_list(int stdlist_no);
   
+  /**<xml>
+   * 스터디리스트 구성 리스트
+   *    <select id="recruit_list_Y" resultType="Recruit_MemberVO" parameterType="int">
+   * </xml>
+   * @param Recruit_MemberVO
+   * @return List
+   */
+  public List<Recruit_MemberVO> recruit_list_Y(int stdlist_no);
+  
   /**
    * <xmp>
    *  팀장 권한을 초기화 
-   *    <update id= "leader_auth" parameterType="int">
+   *    <update id= "leader_auth" parameterType="Hashmap">
    * </xmp>
-   * @param memberno
+   * @param hashmap
    * @return int
    */
-  public int leader_auth(int memberno);
+  public int leader_auth(HashMap hashmap);
   
   
   /**
    * <xmp>
    *   회원 승인
-   *   <update id = "confirm_Y" parameterType="int">
+   *   <update id = "confirm_Y" parameterType="Hashmap">
    * </xmp>
-   * @param memberno
+   * @param hashmap
    * @return int
    */
-  public int confirm_Y(int memberno);
+  public int confirm_Y(HashMap hashmap);
+  
+  /**
+   * <xmp>
+   *   회원 승인
+   *   <update id = "confirm_Y" parameterType="Hashmap">
+   * </xmp>
+   * @param hashmap
+   * @return int
+   */
+  public int confirm_N(HashMap hashmap);
+  
+  /**
+   * <xmp>
+   *   스터디그룹 신청리스트 신청 중복 검사
+   *   <select id= "check_memberno" resultType="int" parameterType="Hashmap">
+   * </xmp>
+   * @param hashmap
+   * @return int
+   */
+  public int check_memberno(HashMap hashmap);
+  
+  
+  /**
+   * <xml> 
+   *  스터디그룹에 관련된 신청리스트 삭제
+   * <delete id="delete" parameterType="int">
+   * </xml>
+   * 
+   * @param stdlist_no
+   * @return int
+   */
+  public int delete(int stdlist_no);
+  
   
   /**
    * <xmp>
@@ -71,5 +113,5 @@ public interface RecruitDAOInter {
    * @return
    */
   public String check_leader(HashMap<String, Object> hashMap);
-
+  
 }

@@ -14,7 +14,7 @@ public class StudyListDAO implements StudyListDAOInter{
   private SqlSessionTemplate mybatis;
   
   public StudyListDAO() {
-    System.out.println("--> StudyListDAO created.");
+    // System.out.println("--> StudyListDAO created.");
   }
 
   @Override
@@ -72,5 +72,57 @@ public class StudyListDAO implements StudyListDAOInter{
     return mybatis.selectOne("studylist.stdlist_no");
   }
 
+  @Override
+  public List<StudyListVO> search_list1(HashMap hashmap) {
+    
+    return mybatis.selectList("studylist.search_list1", hashmap);
+  }
+
+  @Override
+  public List<StudyListVO> search_list2(HashMap hashmap) {
+    
+    return mybatis.selectList("studylist.search_list2", hashmap);
+  }
+
+  @Override
+  public List<StudyListVO> search_list3(HashMap hashmap) {
+    
+    return mybatis.selectList("studylist.search_list3", hashmap);
+  }
+  
+  @Override
+  public int search_count(HashMap hashmap) {
+    
+    return mybatis.selectOne("studylist.search_count", hashmap);
+  }
+
+  @Override
+  public int goodcnt_up(int stdlist_no) {
+    
+    return mybatis.update("studylist.goodcnt_up", stdlist_no);
+  }
+
+  @Override
+  public int goodcnt_down(int stdlist_no) {
+    
+    return mybatis.update("studylist.goodcnt_down", stdlist_no);
+  }
+
+  @Override
+  public List<StudyListVO> rank_top5() {
+    
+    return mybatis.selectList("studylist.rank_top5");
+  }
+
+  @Override
+  public int check_stdno(HashMap hashmap) {
+    
+    return mybatis.selectOne("studylist.check_stdno", hashmap);
+  }
+
+  @Override
+  public int search_leader_memberno(int stdlist_no) {
+    return mybatis.selectOne("studylist.search_leader_memberno", stdlist_no);
+  }
 
 }

@@ -111,7 +111,7 @@ public class MemberCont {
     }
     if (memberVO.getMintrovb() == null || memberVO.getMintrovb() == "") {
       memberVO.setMintrovb("Y");
-    }
+    } 
     if (memberVO.getMphotovb() == null || memberVO.getMphotovb() == "") {
       memberVO.setMphotovb("Y");
     }
@@ -564,12 +564,12 @@ public class MemberCont {
    * @return
    */
   // http://localhost:9090/study/nonuser/login/login.do 
-  @RequestMapping(value = "/login/login.do", 
+  @RequestMapping(value = "/nonuser/login/login.do", 
                              method = RequestMethod.GET)
   public ModelAndView login(HttpServletRequest request, HttpSession session) {
             
     ModelAndView mav = new ModelAndView();
-    mav.setViewName("/login/login_form"); // /webapp/member/login.jsp    
+    mav.setViewName("/nonuser/login/login_form"); // /webapp/member/login.jsp    
     
     Cookie[] cookies = request.getCookies();
     Cookie cookie = null;
@@ -647,7 +647,7 @@ public class MemberCont {
    * @throws NoSuchAlgorithmException 
    * @throws InvalidKeyException  
     */ 
-  @RequestMapping(value="/login/login.do", method=RequestMethod.POST)
+  @RequestMapping(value="/nonuser/login/login.do", method=RequestMethod.POST)
   public ModelAndView login(HttpServletRequest request, 
                                        HttpServletResponse response,
                                        HttpSession session,
@@ -656,8 +656,8 @@ public class MemberCont {
     // System.out.println("memberVO.getMemid(): " + memberVO.getMemid());
     // System.out.println("memberVO.getMempasswd(): " + memberVO.getMempasswd());
     
-    ModelAndView mav = new ModelAndView();
-    mav.setViewName("/login/message"); // webapp/member/message.jsp
+    ModelAndView mav = new ModelAndView(); 
+    mav.setViewName("/nonuser/login/message"); // webapp/member/message.jsp
     
     ArrayList<String> msgs = new ArrayList<String>();
     ArrayList<String> links = new ArrayList<String>();
@@ -732,7 +732,7 @@ public class MemberCont {
       
       mav.setViewName("redirect:/main/index.do"); // 확장자 명시 
       
-    }    
+    }
     
     mav.addObject("msgs", msgs);
     mav.addObject("links", links);
@@ -748,7 +748,7 @@ public class MemberCont {
    * @param session
    * @return
    */
-  @RequestMapping(value="/login/logout.do", method=RequestMethod.GET)
+  @RequestMapping(value="/nonuser/login/logout.do", method=RequestMethod.GET)
   public ModelAndView logout(HttpServletRequest request, 
                                          HttpSession session){
     // System.out.println("--> logout() GET called.");

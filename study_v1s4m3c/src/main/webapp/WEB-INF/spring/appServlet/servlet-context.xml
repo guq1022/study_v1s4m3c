@@ -28,9 +28,10 @@
 	<context:component-scan base-package="dev.mvc.study" />
   
   <!-- ====안희홍 시작==== -->
-	<context:component-scan base-package="dev.mvc.recruit" />
-  <context:component-scan base-package="dev.mvc.reply" />
-  <context:component-scan base-package="dev.mvc.studylist" />
+	<context:component-scan base-package="dev.mvc.std_recom,"/>
+  <context:component-scan base-package="dev.mvc.recruit"/>
+  <context:component-scan base-package="dev.mvc.studylist_reply"/>
+  <context:component-scan base-package="dev.mvc.studylist"/>
   <!-- ==================== -->
   
   

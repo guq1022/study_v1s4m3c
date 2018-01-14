@@ -28,6 +28,33 @@ public interface StudyListProcInter {
   public List<StudyListVO> list();
   
   /**<xml>
+   *   체크박스를 이용한 검색 
+   *  <select id = 'search_list' resultType="StudyListVO" parameterType="Hashmap">
+   * </xml>
+   * @param Hashmap
+   * @return StudyListVO
+   */
+  public List<StudyListVO> search_list1(HashMap hashmap);
+  
+  /**<xml>
+   *  select option을 이용한 검색
+   *  <select id = 'search_list2' resultType="StudyListVO" parameterType="Hashmap">
+   * </xml>
+   * @param Hashmap
+   * @return StudyListVO
+   */
+  public List<StudyListVO> search_list2(HashMap hashmap);
+  
+  /**<xml>
+   *  select option를 이용한 검색 + ajax 페이징
+   *  <select id = 'search_list3' resultType="StudyListVO" parameterType="Hashmap">
+   * </xml>
+   * @param Hashmap
+   * @return StudyListVO
+   */
+  public List<StudyListVO> search_list3(HashMap hashmap);
+  
+  /**<xml>
    * 스터디모집 내용을 수정합니다.
    * <update id="update" parameterType="StudyListVO"> 
    * </xml>
@@ -94,4 +121,70 @@ public interface StudyListProcInter {
    * @return
    */
   public int stdlist_no();
+  
+  /**
+   * <xmp>
+   * <!-- select option 검색으로 검색된 개수 -->
+   * <select id = 'search_count' resultType="int" parameterType="HashMap">
+   * </xmp>
+   * @param categoryno
+   * @return
+   */
+  public int search_count(HashMap hashmap);
+  
+  /**  1 페이지부터 시작 
+   * 현재 페이지: 11 / 22   [이전] 11 12 13 14 15 16 17 18 19 20 [다음] 
+   *
+   * @param search_count 검색(전체) 레코드수 
+   * @param nowPage     현재 페이지
+   * @return 페이징 생성 문자열
+   */ 
+  public String paging(int search_count, int nowPage);
+  
+  /**
+   * <xmp> 스터디그룹별 좋아요수 증가 <update id="goodcnt_up" parameterType="int"> </xmp>
+   * 
+   * @param stdlist_no
+   * @return
+   */
+  public int goodcnt_up(int stdlist_no);
+  
+  /**
+   * <xmp> 스터디그룹별 좋아요수 감소 <update id="goodcnt_down" parameterType="int"> </xmp>
+   * 
+   * @param stdlist_no
+   * @return
+   */
+  public int goodcnt_down(int stdlist_no);
+  
+  /**
+   * <xml> 
+   *  좋아요수별로 top 다섯개 컬럼 
+   * <select id='rank_top5' resultType="StudyListVO"> 
+   * </xml>
+   * 
+   * @param 
+   * @return List<StudyListVO>
+   */
+  public List<StudyListVO> rank_top5();
+  
+  /**
+   * <xml> 
+   *  스터디그룹을 등록한 id 가 맞는지 검사
+   * <select id="check_stdno" resultType="int" parameterType="Hashmap">
+   * </xml>
+   * 
+   * @param hashmap
+   * @return int
+   */
+  public int check_stdno(HashMap hashmap);
+  
+  /**
+   * <xml> 
+   *  스터디번호로 해당 스터디의 그룹장 번호를 추출한다.
+   * </xml>
+   * @param stdlist_no
+   * @return
+   */
+  public int search_leader_memberno(int stdlist_no);
 }

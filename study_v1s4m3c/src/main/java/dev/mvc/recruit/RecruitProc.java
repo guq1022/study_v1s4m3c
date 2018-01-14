@@ -17,7 +17,7 @@ public class RecruitProc implements RecruitProcInter{
   private RecruitDAOInter recruitDAO = null;
   
   public RecruitProc(){
-    System.out.println("--> RecruitProc created.");
+    // System.out.println("--> RecruitProc created.");
   }
 
   /**
@@ -43,9 +43,9 @@ public class RecruitProc implements RecruitProcInter{
    *  Y , L
    */
   @Override
-  public int leader_auth(int memberno) {
+  public int leader_auth(HashMap hashmap) {
     
-    return recruitDAO.leader_auth(memberno);
+    return recruitDAO.leader_auth(hashmap);
   }
 
   /**
@@ -53,11 +53,20 @@ public class RecruitProc implements RecruitProcInter{
    *  Y, T
    */
   @Override
-  public int confirm_Y(int memberno) {
+  public int confirm_Y(HashMap hashmap) {
     
-    return recruitDAO.confirm_Y(memberno);
+    return recruitDAO.confirm_Y(hashmap);
   }
 
+  /**
+   * 회원 거절
+   */
+  @Override
+  public int confirm_N(HashMap hashmap) {
+    
+    return recruitDAO.confirm_N(hashmap);
+  }
+  
   /**
    *  스터디 그룹등록과 동시에 신청테이블 자동으로 생성
    *  리더입력과 동시에 권한 변경
@@ -68,9 +77,33 @@ public class RecruitProc implements RecruitProcInter{
     return recruitDAO.create(studyListVO);
   }
 
+  
+  /**
+   *  스터리그룹 멤버 구성후 스터디 구성 리스트
+   */
+  @Override
+  public List<Recruit_MemberVO> recruit_list_Y(int stdlist_no) {
+    
+    return recruitDAO.recruit_list_Y(stdlist_no);
+  }
+
+  @Override
+  public int check_memberno(HashMap hashmap) {
+    
+    return recruitDAO.check_memberno(hashmap);
+  }
+
+  @Override
+  public int delete(int stdlist_no) {
+    
+    return recruitDAO.delete(stdlist_no);
+  }
+  
   @Override
   public String check_leader(HashMap<String, Object> hashMap) {
     return recruitDAO.check_leader(hashMap); 
   }
+
+
 
 }
